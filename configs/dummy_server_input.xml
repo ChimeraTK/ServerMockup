@@ -1,626 +1,3340 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<application xmlns="https://github.com/ChimeraTK/ApplicationCore" name="WatchdogServer">
-  <directory name="SYS">
-    <variable name="bogomips">
+<application xmlns="https://github.com/ChimeraTK/ApplicationCore" name="LLRFServer">
+  <directory name="Server">
+    <variable name="testTrigger">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Trigger input (if enabled)</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="macroPulseNumber">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Trigger output</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <directory name="MicroDaq">
+      <variable name="enable">
+        <value_type>int32</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>DAQ is active when set to 0 and disabled when set to 0.</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="nMaxFiles">
+        <value_type>uint32</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Maximum number of files in the ring buffer (oldest file will be overwritten).</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="nTriggersPerFile">
+        <value_type>uint32</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Number of triggers stored in each file.</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="currentFile">
+        <value_type>uint32</value_type>
+        <direction>application_to_control_system</direction>
+        <unit></unit>
+        <description>File number currently written to.</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="gradientUnit">
       <value_type>string</value_type>
       <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>bogomips</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="cpu_MHz">
-      <value_type>string</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>cpu_MHz</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="cpu_family">
-      <value_type>string</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>cpu_family</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="family">
-      <value_type>string</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>family</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="model">
-      <value_type>string</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>model</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="model_name">
-      <value_type>string</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>model_name</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="stepping">
-      <value_type>string</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>stepping</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="vendor">
-      <value_type>string</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>vendor</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="nCPU">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>Number of CPUs</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="maxMem">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>kB</unit>
-      <description>Maximum available memory</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="freeMem">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>kB</unit>
-      <description>Free memory</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="cachedMem">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>kB</unit>
-      <description>Cached memory</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="usedMem">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>kB</unit>
-      <description>Used memory</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="maxSwap">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>kB</unit>
-      <description>Swap size</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="freeSwap">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>kB</unit>
-      <description>Free swap</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="usedSwap">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>kB</unit>
-      <description>Used swap</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="startTimeS">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>s</unit>
-      <description>startTimeS</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="startTimeStr">
-      <value_type>string</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>s</unit>
-      <description>startTimeStr</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="uptimeSecTotal">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>s</unit>
-      <description>Total uptime</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="uptimeDays">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>day</unit>
-      <description>Days up</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="uptimeHours">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>h</unit>
-      <description>Hours up</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="uptimeMin">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>min</unit>
-      <description>Minutes up</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="uptimeSec">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>s</unit>
-      <description>Seconds up</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="loadAvg">
-      <value_type>double</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>Average load within last min</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="loadAvg5">
-      <value_type>double</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>Average load within last 5min</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="loadAvg15">
-      <value_type>double</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>Average load within last 15min</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="cpuUsageTotal">
-      <value_type>double</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>%</unit>
-      <description>Total CPU usage</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="cpu1Usage">
-      <value_type>double</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>%</unit>
-      <description>CPU usage</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="cpu2Usage">
-      <value_type>double</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>%</unit>
-      <description>CPU usage</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="cpu3Usage">
-      <value_type>double</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>%</unit>
-      <description>CPU usage</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="cpu4Usage">
-      <value_type>double</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>%</unit>
-      <description>CPU usage</description>
+      <unit>n./a.</unit>
+      <description></description>
       <numberOfElements>1</numberOfElements>
     </variable>
   </directory>
-  <directory name="watchdog">
-    <variable name="PID">
+  <directory name="Controller">
+    <variable name="rfFrequency">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>MHz</unit>
+      <description>Working RF frequency of the system. Must be constant.</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="clockFrequency">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>MHz</unit>
+      <description>FPGA clock frequency (= raw ADC frequency). Must be constant.</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="IQdetectionLength">
+      <value_type>uint32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Number of raw ADC samples per IQ sample pair. Must be constant.</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="samplingFrequencyFilter">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>MHz</unit>
+      <description>IQ sampling frequency as used for the IIR filters (i.e. the actual internal IQ sample frequency)</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="samplingFrequencyAdc">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>MHz</unit>
+      <description>IQ sampling frequency as used for the ADC channels</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="samplingFrequencyController">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>MHz</unit>
+      <description>IQ sampling frequency as used for the controller DAQ channels</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="samplingFrequencyTables">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>MHz</unit>
+      <description>IQ sampling frequency as used for the control tables</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="windowLengthController">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>ms</unit>
+      <description>Window length for controller DAQ</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="bitScaling">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits/MV</unit>
+      <description>Bit scaling factor</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="QLoaded">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Loaded Q used for the power computation</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="shuntImpedance">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>Ohms</unit>
+      <description>Normalised shunt imedance (r/Q) used for the power computation</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="powerUnitConversion">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Factor to convert the SI prefixes of the amplitude-squared into the power (example: (1e6)^2/1e3 = 1e9 for MV-&gt;kW)</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="zeroPhaseThreshold">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>MV</unit>
+      <description>Minimum amplitude to display a non-zero phase</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <directory name="FeedBack">
+      <directory name="Gain">
+        <variable name="amplitude">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Gain amplitude</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="phase">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit></unit>
+          <description>Gain phase (usually 45 deg)</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="scalingFactor">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit></unit>
+          <description>Gain scaling factor</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="tableLimit">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>digits</unit>
+          <description>Limit of the I and Q proportional gain tables</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <directory name="Table">
+          <variable name="I">
+            <value_type>float</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>digits</unit>
+            <description>Proportional gain table in I</description>
+            <numberOfElements>16384</numberOfElements>
+          </variable>
+          <variable name="Q">
+            <value_type>float</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>digits</unit>
+            <description>Proportional gain table in Q</description>
+            <numberOfElements>16384</numberOfElements>
+          </variable>
+          <variable name="amplitude">
+            <value_type>float</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>digits</unit>
+            <description>Proportional gain tables as amplitude</description>
+            <numberOfElements>16384</numberOfElements>
+          </variable>
+          <variable name="phase">
+            <value_type>float</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>digits</unit>
+            <description>Proportional gain tables as phase</description>
+            <numberOfElements>16384</numberOfElements>
+          </variable>
+        </directory>
+        <directory name="Scheduling">
+          <variable name="startTime">
+            <value_type>double</value_type>
+            <direction>control_system_to_application</direction>
+            <unit>us</unit>
+            <description>Start time for gain scheduling</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="stopTime">
+            <value_type>double</value_type>
+            <direction>control_system_to_application</direction>
+            <unit>us</unit>
+            <description>Stop time for gain scheduling</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="initialGain">
+            <value_type>double</value_type>
+            <direction>control_system_to_application</direction>
+            <unit></unit>
+            <description>Gain before the start point, as the ratio of the full gain</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="timeConstant">
+            <value_type>double</value_type>
+            <direction>control_system_to_application</direction>
+            <unit></unit>
+            <description>Time constant for exponential gain scheduling</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="functionSelect">
+            <value_type>int32</value_type>
+            <direction>control_system_to_application</direction>
+            <unit></unit>
+            <description>Gain function selection: 0=disabled; 1=sine function transition; 2=linear transition, 3=full sine wave; 4=exponential function</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+        </directory>
+        <directory name="DAQ">
+          <variable name="I">
+            <value_type>int32</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>n./a.</unit>
+            <description></description>
+            <numberOfElements>16384</numberOfElements>
+          </variable>
+          <variable name="Q">
+            <value_type>int32</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>n./a.</unit>
+            <description></description>
+            <numberOfElements>16384</numberOfElements>
+          </variable>
+        </directory>
+      </directory>
+      <variable name="enable">
+        <value_type>int32</value_type>
+        <direction>application_to_control_system</direction>
+        <unit></unit>
+        <description>Enable feed forward</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <directory name="Integral">
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Enable feed forward</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <directory name="Gain">
+          <variable name="I">
+            <value_type>int32</value_type>
+            <direction>control_system_to_application</direction>
+            <unit>n./a.</unit>
+            <description></description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="Q">
+            <value_type>int32</value_type>
+            <direction>control_system_to_application</direction>
+            <unit>n./a.</unit>
+            <description></description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+        </directory>
+      </directory>
+      <directory name="MaximumOutput">
+        <variable name="I">
+          <value_type>int32</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>n./a.</unit>
+          <description></description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="Q">
+          <value_type>int32</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>n./a.</unit>
+          <description></description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+    </directory>
+    <directory name="PulseShape">
+      <variable name="cwMode">
+        <value_type>int32</value_type>
+        <direction>application_to_control_system</direction>
+        <unit></unit>
+        <description>If true, the pulse form parameters will be changed for contineous-wave operation</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="delay">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>us</unit>
+        <description>Delay of pulse start after start of sampling area</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="fillingDuration">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>us</unit>
+        <description>Duration of the filling period</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="flattopDuration">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>us</unit>
+        <description>Duration of the flat-top period</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="beamStart">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>us</unit>
+        <description>Start time of the beam</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="beamDuration">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>us</unit>
+        <description>Beam duration time</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <directory name="FlatTop2">
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>control_system_to_application</direction>
+          <unit></unit>
+          <description>Enable extra flattop region</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="startTime">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>??</unit>
+          <description>Start time of extra flattop region</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="transition">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>??</unit>
+          <description>???</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <directory name="FlatTop3">
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>control_system_to_application</direction>
+          <unit></unit>
+          <description>Enable extra flattop region</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="startTime">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>??</unit>
+          <description>Start time of extra flattop region</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="transition">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>??</unit>
+          <description>???</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+    </directory>
+    <directory name="SetPoint">
+      <variable name="amplitude">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phase">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>degrees</unit>
+        <description>Phase</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeLimit">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>MV</unit>
+        <description>Limit of the setpoint amplitude</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="tableLimit">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>digits</unit>
+        <description>Limit of the I and Q setpoint tables</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <directory name="Correction">
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>control_system_to_application</direction>
+          <unit></unit>
+          <description>If true, the set point correction tables will be used</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="I">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>digits</unit>
+          <description>Set point correction table for I</description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <variable name="Q">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>digits</unit>
+          <description>Set point correction table for Q</description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+      </directory>
+      <directory name="Table">
+        <variable name="I">
+          <value_type>float</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>digits</unit>
+          <description>Setpoint table in I</description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <variable name="Q">
+          <value_type>float</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>digits</unit>
+          <description>Setpoint table in Q</description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <variable name="amplitude">
+          <value_type>float</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>digits</unit>
+          <description>Setpoint tables as amplitude</description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <variable name="phase">
+          <value_type>float</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>digits</unit>
+          <description>Setpoint tables as phase</description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+      </directory>
+      <directory name="DAQ">
+        <variable name="I">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>n./a.</unit>
+          <description></description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <variable name="Q">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>n./a.</unit>
+          <description></description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+      </directory>
+    </directory>
+    <directory name="Calibration">
+      <directory name="Output">
+        <directory name="CascadeInput">
+          <variable name="enable">
+            <value_type>int32</value_type>
+            <direction>application_to_control_system</direction>
+            <unit></unit>
+            <description>Enable the cascaded scaling and rotation</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="angle">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>deg</unit>
+            <description>Output rotation angle</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="scale">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit></unit>
+            <description>Output scaling factor</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+        </directory>
+        <variable name="scale">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit></unit>
+          <description>Scaling factor</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="angle">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>deg</unit>
+          <description>Rotation angle</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <directory name="VectorSum">
+        <variable name="scale">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit></unit>
+          <description>Scaling factor</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="angle">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>deg</unit>
+          <description>Rotation angle</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <directory name="CascadeInput">
+          <variable name="enable">
+            <value_type>int32</value_type>
+            <direction>control_system_to_application</direction>
+            <unit></unit>
+            <description>Enable the cascaded scaling and rotation</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="scale">
+            <value_type>double</value_type>
+            <direction>control_system_to_application</direction>
+            <unit></unit>
+            <description>Scaling factor</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="angle">
+            <value_type>double</value_type>
+            <direction>control_system_to_application</direction>
+            <unit>deg</unit>
+            <description>Rotation angle</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+        </directory>
+      </directory>
+    </directory>
+    <directory name="VectorSum">
+      <directory name="Samples">
+        <variable name="I">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Calibrated value in I</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="Q">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Calibrated value in Q</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="amplitude">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Amplitude</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="phase">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Phase</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="IAverage">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Calibrated value in I averaged over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="QAverage">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Calibrated value in Q averaged over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="amplitudeAverage">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Amplitude averaged over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="phaseAverage">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Phase averaged over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="amplitudeStandardDeviation">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Standard deviation of amplitude over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="phaseStandardDeviation">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Standard deviation over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <variable name="bitShift">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>bits</unit>
+        <description>Number of bits to right-shift the vector sum in firmware</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitude">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude</description>
+        <numberOfElements>16384</numberOfElements>
+      </variable>
+      <variable name="phase">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase</description>
+        <numberOfElements>16384</numberOfElements>
+      </variable>
+      <variable name="I">
+        <value_type>int32</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>n./a.</unit>
+        <description></description>
+        <numberOfElements>16384</numberOfElements>
+      </variable>
+      <variable name="Q">
+        <value_type>int32</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>n./a.</unit>
+        <description></description>
+        <numberOfElements>16384</numberOfElements>
+      </variable>
+    </directory>
+    <directory name="Error">
+      <directory name="Samples">
+        <variable name="I">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Calibrated value in I</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="Q">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Calibrated value in Q</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="amplitude">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Amplitude</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="phase">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Phase</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="IAverage">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Calibrated value in I averaged over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="QAverage">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Calibrated value in Q averaged over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="amplitudeAverage">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Amplitude averaged over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="phaseAverage">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Phase averaged over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="amplitudeStandardDeviation">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Standard deviation of amplitude over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="phaseStandardDeviation">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Standard deviation over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <variable name="amplitude">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude</description>
+        <numberOfElements>16384</numberOfElements>
+      </variable>
+      <variable name="phase">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase</description>
+        <numberOfElements>16384</numberOfElements>
+      </variable>
+      <variable name="I">
+        <value_type>int32</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>n./a.</unit>
+        <description></description>
+        <numberOfElements>16384</numberOfElements>
+      </variable>
+      <variable name="Q">
+        <value_type>int32</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>n./a.</unit>
+        <description></description>
+        <numberOfElements>16384</numberOfElements>
+      </variable>
+    </directory>
+    <directory name="FeedForward">
+      <variable name="enable">
+        <value_type>int32</value_type>
+        <direction>application_to_control_system</direction>
+        <unit></unit>
+        <description>Enable feed forward</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="scale">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Feed forward scaling factor for flattop</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="fillScale">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Feed forward scaling factor for filling phase</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <directory name="UserTables">
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>control_system_to_application</direction>
+          <unit></unit>
+          <description>If true, the user feed-forward tables will be used</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <variable name="tableLimit">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>digits</unit>
+        <description>Limit of the I and Q feed forward tables</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <directory name="Correction">
+        <variable name="I">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>digits</unit>
+          <description>Feed forward correction table for I</description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <variable name="Q">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>digits</unit>
+          <description>Feed forward correction table for Q</description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>control_system_to_application</direction>
+          <unit></unit>
+          <description>Enable feed forward correction</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <directory name="Table">
+        <variable name="I">
+          <value_type>float</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>digits</unit>
+          <description>Feed-forward table in I</description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <variable name="Q">
+          <value_type>float</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>digits</unit>
+          <description>Feed-forward table in Q</description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <variable name="amplitude">
+          <value_type>float</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>digits</unit>
+          <description>Feed-forward tables as amplitude</description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <variable name="phase">
+          <value_type>float</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>digits</unit>
+          <description>Feed-forward tables as phase</description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+      </directory>
+      <variable name="amplitude">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude</description>
+        <numberOfElements>16384</numberOfElements>
+      </variable>
+      <variable name="phase">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase</description>
+        <numberOfElements>16384</numberOfElements>
+      </variable>
+      <directory name="Samples">
+        <variable name="I">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Calibrated value in I</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="Q">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Calibrated value in Q</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="amplitude">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Amplitude</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="phase">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Phase</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="IAverage">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Calibrated value in I averaged over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="QAverage">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Calibrated value in Q averaged over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="amplitudeAverage">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Amplitude averaged over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="phaseAverage">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Phase averaged over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="amplitudeStandardDeviation">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Standard deviation of amplitude over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="phaseStandardDeviation">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Standard deviation over the full pulse</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <directory name="DAQ">
+        <variable name="I">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>n./a.</unit>
+          <description></description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <variable name="Q">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>n./a.</unit>
+          <description></description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+      </directory>
+    </directory>
+    <variable name="lengthScale">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>??</unit>
+      <description>factor to scale with cavity length</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <directory name="FrequencyModulation">
+      <variable name="offset">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>??</unit>
+        <description>Frequency modulation offset</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <directory name="PhaseModulation">
+      <variable name="maximumPhaseOffset">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>??</unit>
+        <description>Maximum phase offset for phase modulation</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="timeConstant">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Time constant of phase modulation</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="detuningSlope">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>??</unit>
+        <description>Detuning slope of phase modulation</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="detuningOffset">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>??</unit>
+        <description>Detuning offset of phase modulation</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="startTime">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>??</unit>
+        <description>Start time of phase modulation</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="stopTime">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>??</unit>
+        <description>Stop time of phase modulation</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="functionSelect">
+        <value_type>int32</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Select function for phase modulation</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <directory name="Output">
+      <directory name="Proportional">
+        <variable name="amplitude">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Amplitude</description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <variable name="phase">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Phase</description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <directory name="Samples">
+          <variable name="I">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>MV</unit>
+            <description>Calibrated value in I</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="Q">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>MV</unit>
+            <description>Calibrated value in Q</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="amplitude">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>MV</unit>
+            <description>Amplitude</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="phase">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>deg</unit>
+            <description>Phase</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="IAverage">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>MV</unit>
+            <description>Calibrated value in I averaged over the full pulse</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="QAverage">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>MV</unit>
+            <description>Calibrated value in Q averaged over the full pulse</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="amplitudeAverage">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>MV</unit>
+            <description>Amplitude averaged over the full pulse</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="phaseAverage">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>deg</unit>
+            <description>Phase averaged over the full pulse</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="amplitudeStandardDeviation">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>MV</unit>
+            <description>Standard deviation of amplitude over the full pulse</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="phaseStandardDeviation">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>deg</unit>
+            <description>Standard deviation over the full pulse</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+        </directory>
+        <variable name="I">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>n./a.</unit>
+          <description></description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <variable name="Q">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>n./a.</unit>
+          <description></description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+      </directory>
+      <directory name="Integral">
+        <variable name="amplitude">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>MV</unit>
+          <description>Amplitude</description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <variable name="phase">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Phase</description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <directory name="Samples">
+          <variable name="I">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>MV</unit>
+            <description>Calibrated value in I</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="Q">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>MV</unit>
+            <description>Calibrated value in Q</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="amplitude">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>MV</unit>
+            <description>Amplitude</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="phase">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>deg</unit>
+            <description>Phase</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="IAverage">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>MV</unit>
+            <description>Calibrated value in I averaged over the full pulse</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="QAverage">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>MV</unit>
+            <description>Calibrated value in Q averaged over the full pulse</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="amplitudeAverage">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>MV</unit>
+            <description>Amplitude averaged over the full pulse</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="phaseAverage">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>deg</unit>
+            <description>Phase averaged over the full pulse</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="amplitudeStandardDeviation">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>MV</unit>
+            <description>Standard deviation of amplitude over the full pulse</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="phaseStandardDeviation">
+            <value_type>double</value_type>
+            <direction>application_to_control_system</direction>
+            <unit>deg</unit>
+            <description>Standard deviation over the full pulse</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+        </directory>
+        <variable name="I">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>n./a.</unit>
+          <description></description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <variable name="Q">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>n./a.</unit>
+          <description></description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+      </directory>
+      <directory name="Total">
+        <variable name="limiter">
+          <value_type>int32</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>n./a.</unit>
+          <description></description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="limiterEnable">
+          <value_type>int32</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>n./a.</unit>
+          <description></description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="I">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>n./a.</unit>
+          <description></description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+        <variable name="Q">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>n./a.</unit>
+          <description></description>
+          <numberOfElements>16384</numberOfElements>
+        </variable>
+      </directory>
+    </directory>
+    <variable name="globalSamplingPosition">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Input value to be scaled</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <directory name="VectorModulator">
+      <variable name="attenuation">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>dB</unit>
+        <description>Attenuation for channel 8</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+  </directory>
+  <directory name="Automation">
+    <directory name="interlockDetection">
+      <variable name="enable">
+        <value_type>int32</value_type>
+        <direction>application_to_control_system</direction>
+        <unit></unit>
+        <description>Enable interlock detection</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="reset">
+        <value_type>int32</value_type>
+        <direction>application_to_control_system</direction>
+        <unit></unit>
+        <description>Clear the interlock detection status when written to this variable</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <directory name="FeedForward">
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Enable feed forward</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <directory name="FeedBack">
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Enable feed forward</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <directory name="Integral">
+          <variable name="enable">
+            <value_type>int32</value_type>
+            <direction>application_to_control_system</direction>
+            <unit></unit>
+            <description>Enable feed forward</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+        </directory>
+      </directory>
+      <variable name="interlockDetected">
+        <value_type>int32</value_type>
+        <direction>application_to_control_system</direction>
+        <unit></unit>
+        <description>Will be set to 1 if interlock is detected or 0 otherwise.</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="threshold">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>MV</unit>
+        <description>Threshold on vector sum amplitude for interlock detection</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <directory name="FeedForward">
+      <variable name="enable">
+        <value_type>int32</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Enable feed forward</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <directory name="FeedBack">
+      <variable name="enable">
+        <value_type>int32</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Enable feedback controller</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <directory name="Integral">
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>control_system_to_application</direction>
+          <unit></unit>
+          <description>Enable integral feedback controller</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <directory name="Gain">
+        <variable name="amplitude">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit></unit>
+          <description>Gain amplitude</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+    </directory>
+    <directory name="PulseShape">
+      <variable name="cwMode">
+        <value_type>int32</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>If true, the pulse form parameters will be changed for contineous-wave operation</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <directory name="VectorModulator">
+      <directory name="DacOffset">
+        <variable name="I">
+          <value_type>int32</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>digits</unit>
+          <description></description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="Q">
+          <value_type>int32</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>digits</unit>
+          <description></description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <directory name="Calibration">
+          <variable name="maxIandQ">
+            <value_type>double</value_type>
+            <direction>control_system_to_application</direction>
+            <unit></unit>
+            <description>Maximum I and Q values for the DAC offset allowed during calibration</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="maxAmplitudeAfterCalibration">
+            <value_type>double</value_type>
+            <direction>control_system_to_application</direction>
+            <unit></unit>
+            <description>Target amplitude to be achieved after optimisation</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="maxIterations">
+            <value_type>uint32</value_type>
+            <direction>control_system_to_application</direction>
+            <unit></unit>
+            <description>Maximum number of iterations</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+          <variable name="nTriggersAverage">
+            <value_type>uint32</value_type>
+            <direction>control_system_to_application</direction>
+            <unit></unit>
+            <description>Number of triggers to average over for the measurements</description>
+            <numberOfElements>1</numberOfElements>
+          </variable>
+        </directory>
+      </directory>
+    </directory>
+    <variable name="requestMode">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>MANUAL=1, RAMPUP=3, CLEAR_ERROR=4, ABORT=5, SWITCH_OFF=6, CALIBRATE_VM_OFFSET=7</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="currentMode">
       <value_type>int32</value_type>
       <direction>application_to_control_system</direction>
       <unit></unit>
-      <description>PID of the process</description>
+      <description>OFF=0, MANUAL=1, RAMPUP=3, ERROR=4, CW_AUTO=5, RAMP_NEW_SETPOINT=6, RAMP_NEW_PHASE=7, CALIBRATE_VM_OFFSET=8</description>
       <numberOfElements>1</numberOfElements>
     </variable>
-    <variable name="runtime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>s</unit>
-      <description>Time since process is running</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="utime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>clock ticks</unit>
-      <description>user-mode CPU time accumulated by process</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="stime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>clock ticks</unit>
-      <description>kernel-mode CPU time accumulated by process</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="cutime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>clock ticks</unit>
-      <description>cumulative utime of process and reaped children</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="cstime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>clock ticks</unit>
-      <description>cumulative stime of process and reaped children</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="startTime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>s</unit>
-      <description>start time of process with respect to system start [s]</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="startTimeStr">
+    <variable name="errorMessage">
       <value_type>string</value_type>
       <direction>application_to_control_system</direction>
       <unit></unit>
-      <description>start time string</description>
+      <description>Error message if currentMode is ERROR.</description>
       <numberOfElements>1</numberOfElements>
     </variable>
-    <variable name="priority">
+    <directory name="Rampup">
+      <variable name="initialSetpoint">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>MV</unit>
+        <description>Initial amplitude set point for the rampup procedure</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="allowedAmplitudeExcess">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>MV</unit>
+        <description>Allowed excess of vector sum amplitude w.r.t. set point</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="allowedError">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>MV</unit>
+        <description>Allowed amplitude of error vector after output vector correction and/or in closed-loop operation for the rampup procedure</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="stepsizeSetpoint">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>MV</unit>
+        <description>Stepsize of amplitude setpoint for the rampup procedure</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="stepsizeGain">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Stepsize of proportional gain for the rampup procedure</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <directory name="OVC">
+        <variable name="deltaScale">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit></unit>
+          <description>Allow scaling in the output vector correction in the range [1-x:1+x]</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="rateScale">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit></unit>
+          <description>Maximum change of the scaling factor in each correction step of the output vector correction</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="ratePhase">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>deg</unit>
+          <description>Maximum change of the phase in each correction step of the output vector correction</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="maxIterations">
+          <value_type>uint32</value_type>
+          <direction>control_system_to_application</direction>
+          <unit></unit>
+          <description>Maximum number of iterations of the output vector correction until rampup/allowedError must be reached</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="targetError">
+          <value_type>double</value_type>
+          <direction>control_system_to_application</direction>
+          <unit>MV</unit>
+          <description>Target amplitude of error vector after output vector correction for the rampup procedure</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+    </directory>
+    <directory name="Ramp">
+      <variable name="amplitudeStep">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Maximum step size for amplitude set-point changes in closed-loop operation</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseStep">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Maximum step size for phase set-point changes in closed-loop operation</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="DAC_OFFSET_I">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>digits</unit>
+      <description></description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="DAC_OFFSET_Q">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>digits</unit>
+      <description></description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <directory name="SetPoint">
+      <variable name="amplitude">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>MV</unit>
+        <description>Amplitude</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phase">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>degrees</unit>
+        <description>Phase</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+  </directory>
+  <directory name="Forward">
+    <directory name="Calibration">
+      <directory name="CascadeInput">
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Enable the cascaded scaling and rotation</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="scale">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Scaling factor</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="angle">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Rotation angle</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <variable name="scale">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Scaling factor</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="angle">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>deg</unit>
+        <description>Rotation angle</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="limiterActive">
       <value_type>int32</value_type>
       <direction>application_to_control_system</direction>
       <unit></unit>
-      <description>kernel scheduling priority</description>
+      <description>Flag whether the limiter was active during the pulse</description>
       <numberOfElements>1</numberOfElements>
     </variable>
-    <variable name="nice">
+    <variable name="prelimiterActive">
       <value_type>int32</value_type>
       <direction>application_to_control_system</direction>
       <unit></unit>
-      <description>standard unix nice level of process</description>
+      <description>Flag whether the pre-limiter was active during the pulse</description>
       <numberOfElements>1</numberOfElements>
     </variable>
-    <variable name="rss">
+    <variable name="adcOverflow">
       <value_type>int32</value_type>
       <direction>application_to_control_system</direction>
       <unit></unit>
-      <description>resident set size from /proc/#/stat (pages)</description>
+      <description>Flag whether the ADC was overflowing during the pulse</description>
       <numberOfElements>1</numberOfElements>
     </variable>
-    <variable name="pcpu">
+    <variable name="limiterDisable">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Disable the limiter if set to 1</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="vectorSumInclude">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Include channel in vector sum if set to 1</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="amplitude">
       <value_type>double</value_type>
       <direction>application_to_control_system</direction>
-      <unit>%</unit>
-      <description>Actual CPU usage</description>
-      <numberOfElements>1</numberOfElements>
+      <unit>MV</unit>
+      <description>Amplitude over time</description>
+      <numberOfElements>16384</numberOfElements>
     </variable>
-    <variable name="avpcpu">
+    <variable name="phase">
       <value_type>double</value_type>
       <direction>application_to_control_system</direction>
-      <unit>%</unit>
-      <description>Average CPU usage</description>
+      <unit>deg</unit>
+      <description>Phase over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="power">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>kW</unit>
+      <description>Computed power over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="raw">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>bits</unit>
+      <description>RAW ADC data if RAW DAQ is enabled</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="limiter">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits</unit>
+      <description>Threshold for the limiter</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="prelimiter">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits</unit>
+      <description>Threshold for the limiter</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <directory name="Samples">
+      <variable name="amplitude">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phase">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="power">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>kW</unit>
+        <description>Power</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="powerAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Power averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeStandardDeviation">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Standard deviation of amplitude over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseStandardDeviation">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Standard deviation over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <directory name="Filter">
+      <variable name="type">
+        <value_type>int32</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>0: no filter, 1: notch, 2: low-pass, 3: block signal</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="bandwidth">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>kHz</unit>
+        <description>Filter bandwidth (only for notch filter)</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="frequency">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>kHz</unit>
+        <description>Filter center/corner frequency (only for notch and low-pass filters)</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="channelNumber">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>n./a.</unit>
+      <description></description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="attenuation">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>dB</unit>
+      <description>Attenuation for channel 0</description>
       <numberOfElements>1</numberOfElements>
     </variable>
   </directory>
-  <directory name="PROCESS_1">
-    <variable name="enableProcess">
+  <directory name="Board">
+    <directory name="CommonCalibration">
+      <variable name="scale">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Scaling factor</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="angle">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>deg</unit>
+        <description>Rotation angle</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="rawDaqMode">
       <value_type>int32</value_type>
       <direction>control_system_to_application</direction>
       <unit></unit>
-      <description>Start the process</description>
+      <description>Enable RAW DAQ mode</description>
       <numberOfElements>1</numberOfElements>
     </variable>
-    <variable name="CMD">
-      <value_type>string</value_type>
+    <variable name="daqDecimation">
+      <value_type>uint32</value_type>
       <direction>control_system_to_application</direction>
       <unit></unit>
-      <description>Command used to start the process</description>
+      <description>Decimation factor to reduce amplitude/phase resp. I/Q data transferred from the FPGA to the CPU. This allows to cover longer time periods at the cost of a lower sampling rate.</description>
       <numberOfElements>1</numberOfElements>
     </variable>
-    <variable name="Path">
-      <value_type>string</value_type>
-      <direction>control_system_to_application</direction>
-      <unit></unit>
-      <description>Path where to execute the command used to start the process</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="killSig">
-      <value_type>int32</value_type>
-      <direction>control_system_to_application</direction>
-      <unit></unit>
-      <description>Signal used to kill the process (2: SIGINT, 9: SIGKILL)</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="pidOffset">
-      <value_type>int32</value_type>
-      <direction>control_system_to_application</direction>
-      <unit></unit>
-      <description>PID offset used when monitoring the started process</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="PID">
+    <variable name="BOARD_VS_CH_ENA">
       <value_type>int32</value_type>
       <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>PID of the process</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="runtime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>s</unit>
-      <description>Time since process is running</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="utime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>clock ticks</unit>
-      <description>user-mode CPU time accumulated by process</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="stime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>clock ticks</unit>
-      <description>kernel-mode CPU time accumulated by process</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="cutime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>clock ticks</unit>
-      <description>cumulative utime of process and reaped children</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="cstime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>clock ticks</unit>
-      <description>cumulative stime of process and reaped children</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="startTime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>s</unit>
-      <description>start time of process with respect to system start [s]</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="startTimeStr">
-      <value_type>string</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>start time string</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="priority">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>kernel scheduling priority</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="nice">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>standard unix nice level of process</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="rss">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>resident set size from /proc/#/stat (pages)</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="pcpu">
-      <value_type>double</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>%</unit>
-      <description>Actual CPU usage</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="avpcpu">
-      <value_type>double</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>%</unit>
-      <description>Average CPU usage</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="IsRunning">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>Process status 0: not running, 1: running</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="Failed">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>Number of failed restarts</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="nChilds">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>Number of started processes</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="Restarts">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>Number of time the process was automatically restarted by the watchdog since server start.</description>
+      <unit>n./a.</unit>
+      <description></description>
       <numberOfElements>1</numberOfElements>
     </variable>
   </directory>
-  <directory name="PROCESS_2">
-    <variable name="enableProcess">
+  <directory name="Reflected">
+    <directory name="Calibration">
+      <directory name="CascadeInput">
+        <variable name="scale">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Scaling factor</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="angle">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Rotation angle</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Enable the cascaded scaling and rotation</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <variable name="scale">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Scaling factor</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="angle">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>deg</unit>
+        <description>Rotation angle</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="limiterActive">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the limiter was active during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="prelimiterActive">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the pre-limiter was active during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="adcOverflow">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the ADC was overflowing during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="limiterDisable">
       <value_type>int32</value_type>
       <direction>control_system_to_application</direction>
       <unit></unit>
-      <description>Start the process</description>
+      <description>Disable the limiter if set to 1</description>
       <numberOfElements>1</numberOfElements>
     </variable>
-    <variable name="CMD">
-      <value_type>string</value_type>
-      <direction>control_system_to_application</direction>
-      <unit></unit>
-      <description>Command used to start the process</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="Path">
-      <value_type>string</value_type>
-      <direction>control_system_to_application</direction>
-      <unit></unit>
-      <description>Path where to execute the command used to start the process</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="killSig">
+    <variable name="vectorSumInclude">
       <value_type>int32</value_type>
       <direction>control_system_to_application</direction>
       <unit></unit>
-      <description>Signal used to kill the process (2: SIGINT, 9: SIGKILL)</description>
+      <description>Include channel in vector sum if set to 1</description>
       <numberOfElements>1</numberOfElements>
     </variable>
-    <variable name="pidOffset">
-      <value_type>int32</value_type>
-      <direction>control_system_to_application</direction>
-      <unit></unit>
-      <description>PID offset used when monitoring the started process</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="PID">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>PID of the process</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="runtime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>s</unit>
-      <description>Time since process is running</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="utime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>clock ticks</unit>
-      <description>user-mode CPU time accumulated by process</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="stime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>clock ticks</unit>
-      <description>kernel-mode CPU time accumulated by process</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="cutime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>clock ticks</unit>
-      <description>cumulative utime of process and reaped children</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="cstime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>clock ticks</unit>
-      <description>cumulative stime of process and reaped children</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="startTime">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit>s</unit>
-      <description>start time of process with respect to system start [s]</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="startTimeStr">
-      <value_type>string</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>start time string</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="priority">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>kernel scheduling priority</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="nice">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>standard unix nice level of process</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="rss">
-      <value_type>int32</value_type>
-      <direction>application_to_control_system</direction>
-      <unit></unit>
-      <description>resident set size from /proc/#/stat (pages)</description>
-      <numberOfElements>1</numberOfElements>
-    </variable>
-    <variable name="pcpu">
+    <variable name="amplitude">
       <value_type>double</value_type>
       <direction>application_to_control_system</direction>
-      <unit>%</unit>
-      <description>Actual CPU usage</description>
-      <numberOfElements>1</numberOfElements>
+      <unit>MV</unit>
+      <description>Amplitude over time</description>
+      <numberOfElements>16384</numberOfElements>
     </variable>
-    <variable name="avpcpu">
+    <variable name="phase">
       <value_type>double</value_type>
       <direction>application_to_control_system</direction>
-      <unit>%</unit>
-      <description>Average CPU usage</description>
+      <unit>deg</unit>
+      <description>Phase over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="power">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>kW</unit>
+      <description>Computed power over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="raw">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>bits</unit>
+      <description>RAW ADC data if RAW DAQ is enabled</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="limiter">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits</unit>
+      <description>Threshold for the limiter</description>
       <numberOfElements>1</numberOfElements>
     </variable>
-    <variable name="IsRunning">
+    <variable name="prelimiter">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits</unit>
+      <description>Threshold for the limiter</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <directory name="Samples">
+      <variable name="amplitude">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phase">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="power">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>kW</unit>
+        <description>Power</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="powerAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Power averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeStandardDeviation">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Standard deviation of amplitude over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseStandardDeviation">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Standard deviation over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <directory name="Filter">
+      <variable name="type">
+        <value_type>int32</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>0: no filter, 1: notch, 2: low-pass, 3: block signal</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="bandwidth">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>kHz</unit>
+        <description>Filter bandwidth (only for notch filter)</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="frequency">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>kHz</unit>
+        <description>Filter center/corner frequency (only for notch and low-pass filters)</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="channelNumber">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>n./a.</unit>
+      <description></description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="attenuation">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>dB</unit>
+      <description>Attenuation for channel 1</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+  </directory>
+  <directory name="Probe">
+    <directory name="Calibration">
+      <directory name="CascadeInput">
+        <variable name="scale">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Scaling factor</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="angle">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Rotation angle</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Enable the cascaded scaling and rotation</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <variable name="scale">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Scaling factor</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="angle">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>deg</unit>
+        <description>Rotation angle</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="limiterActive">
       <value_type>int32</value_type>
       <direction>application_to_control_system</direction>
       <unit></unit>
-      <description>Process status 0: not running, 1: running</description>
+      <description>Flag whether the limiter was active during the pulse</description>
       <numberOfElements>1</numberOfElements>
     </variable>
-    <variable name="Failed">
+    <variable name="prelimiterActive">
       <value_type>int32</value_type>
       <direction>application_to_control_system</direction>
       <unit></unit>
-      <description>Number of failed restarts</description>
+      <description>Flag whether the pre-limiter was active during the pulse</description>
       <numberOfElements>1</numberOfElements>
     </variable>
-    <variable name="nChilds">
+    <variable name="adcOverflow">
       <value_type>int32</value_type>
       <direction>application_to_control_system</direction>
       <unit></unit>
-      <description>Number of started processes</description>
+      <description>Flag whether the ADC was overflowing during the pulse</description>
       <numberOfElements>1</numberOfElements>
     </variable>
-    <variable name="Restarts">
+    <variable name="limiterDisable">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Disable the limiter if set to 1</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="vectorSumInclude">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Include channel in vector sum if set to 1</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="amplitude">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>MV</unit>
+      <description>Amplitude over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="phase">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>deg</unit>
+      <description>Phase over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="power">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>kW</unit>
+      <description>Computed power over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="raw">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>bits</unit>
+      <description>RAW ADC data if RAW DAQ is enabled</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="limiter">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits</unit>
+      <description>Threshold for the limiter</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="prelimiter">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits</unit>
+      <description>Threshold for the limiter</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <directory name="Samples">
+      <variable name="amplitude">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phase">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="power">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>kW</unit>
+        <description>Power</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="powerAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Power averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeStandardDeviation">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Standard deviation of amplitude over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseStandardDeviation">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Standard deviation over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <directory name="Filter">
+      <variable name="type">
+        <value_type>int32</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>0: no filter, 1: notch, 2: low-pass, 3: block signal</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="bandwidth">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>kHz</unit>
+        <description>Filter bandwidth (only for notch filter)</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="frequency">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>kHz</unit>
+        <description>Filter center/corner frequency (only for notch and low-pass filters)</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="channelNumber">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>n./a.</unit>
+      <description></description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="attenuation">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>dB</unit>
+      <description>Attenuation for channel 2</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+  </directory>
+  <directory name="CH3">
+    <directory name="Calibration">
+      <directory name="CascadeInput">
+        <variable name="scale">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Scaling factor</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="angle">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Rotation angle</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Enable the cascaded scaling and rotation</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <variable name="scale">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Scaling factor</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="angle">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>deg</unit>
+        <description>Rotation angle</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="limiterActive">
       <value_type>int32</value_type>
       <direction>application_to_control_system</direction>
       <unit></unit>
-      <description>Number of time the process was automatically restarted by the watchdog since server start.</description>
+      <description>Flag whether the limiter was active during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="prelimiterActive">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the pre-limiter was active during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="adcOverflow">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the ADC was overflowing during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="limiterDisable">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Disable the limiter if set to 1</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="vectorSumInclude">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Include channel in vector sum if set to 1</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="amplitude">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>MV</unit>
+      <description>Amplitude over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="phase">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>deg</unit>
+      <description>Phase over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="power">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>kW</unit>
+      <description>Computed power over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="raw">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>bits</unit>
+      <description>RAW ADC data if RAW DAQ is enabled</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="limiter">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits</unit>
+      <description>Threshold for the limiter</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="prelimiter">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits</unit>
+      <description>Threshold for the limiter</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <directory name="Samples">
+      <variable name="amplitude">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phase">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="power">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>kW</unit>
+        <description>Power</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="powerAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Power averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeStandardDeviation">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Standard deviation of amplitude over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseStandardDeviation">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Standard deviation over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <directory name="Filter">
+      <variable name="type">
+        <value_type>int32</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>0: no filter, 1: notch, 2: low-pass, 3: block signal</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="bandwidth">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>kHz</unit>
+        <description>Filter bandwidth (only for notch filter)</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="frequency">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>kHz</unit>
+        <description>Filter center/corner frequency (only for notch and low-pass filters)</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="channelNumber">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>n./a.</unit>
+      <description></description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="attenuation">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>dB</unit>
+      <description>Attenuation for channel 3</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+  </directory>
+  <directory name="CH4">
+    <directory name="Calibration">
+      <directory name="CascadeInput">
+        <variable name="scale">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Scaling factor</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="angle">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Rotation angle</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Enable the cascaded scaling and rotation</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <variable name="scale">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Scaling factor</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="angle">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>deg</unit>
+        <description>Rotation angle</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="limiterActive">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the limiter was active during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="prelimiterActive">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the pre-limiter was active during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="adcOverflow">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the ADC was overflowing during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="limiterDisable">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Disable the limiter if set to 1</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="vectorSumInclude">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Include channel in vector sum if set to 1</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="amplitude">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>MV</unit>
+      <description>Amplitude over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="phase">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>deg</unit>
+      <description>Phase over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="power">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>kW</unit>
+      <description>Computed power over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="raw">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>bits</unit>
+      <description>RAW ADC data if RAW DAQ is enabled</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="limiter">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits</unit>
+      <description>Threshold for the limiter</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="prelimiter">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits</unit>
+      <description>Threshold for the limiter</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <directory name="Samples">
+      <variable name="amplitude">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phase">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="power">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>kW</unit>
+        <description>Power</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="powerAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Power averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeStandardDeviation">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Standard deviation of amplitude over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseStandardDeviation">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Standard deviation over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <directory name="Filter">
+      <variable name="type">
+        <value_type>int32</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>0: no filter, 1: notch, 2: low-pass, 3: block signal</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="bandwidth">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>kHz</unit>
+        <description>Filter bandwidth (only for notch filter)</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="frequency">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>kHz</unit>
+        <description>Filter center/corner frequency (only for notch and low-pass filters)</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="channelNumber">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>n./a.</unit>
+      <description></description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="attenuation">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>dB</unit>
+      <description>Attenuation for channel 4</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+  </directory>
+  <directory name="CH5">
+    <directory name="Calibration">
+      <directory name="CascadeInput">
+        <variable name="scale">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Scaling factor</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="angle">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Rotation angle</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Enable the cascaded scaling and rotation</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <variable name="scale">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Scaling factor</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="angle">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>deg</unit>
+        <description>Rotation angle</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="limiterActive">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the limiter was active during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="prelimiterActive">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the pre-limiter was active during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="adcOverflow">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the ADC was overflowing during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="limiterDisable">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Disable the limiter if set to 1</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="vectorSumInclude">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Include channel in vector sum if set to 1</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="amplitude">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>MV</unit>
+      <description>Amplitude over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="phase">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>deg</unit>
+      <description>Phase over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="power">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>kW</unit>
+      <description>Computed power over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="raw">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>bits</unit>
+      <description>RAW ADC data if RAW DAQ is enabled</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="limiter">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits</unit>
+      <description>Threshold for the limiter</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="prelimiter">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits</unit>
+      <description>Threshold for the limiter</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <directory name="Samples">
+      <variable name="amplitude">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phase">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="power">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>kW</unit>
+        <description>Power</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="powerAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Power averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeStandardDeviation">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Standard deviation of amplitude over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseStandardDeviation">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Standard deviation over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <directory name="Filter">
+      <variable name="type">
+        <value_type>int32</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>0: no filter, 1: notch, 2: low-pass, 3: block signal</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="bandwidth">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>kHz</unit>
+        <description>Filter bandwidth (only for notch filter)</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="frequency">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>kHz</unit>
+        <description>Filter center/corner frequency (only for notch and low-pass filters)</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="channelNumber">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>n./a.</unit>
+      <description></description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="attenuation">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>dB</unit>
+      <description>Attenuation for channel 5</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+  </directory>
+  <directory name="Reference">
+    <directory name="Calibration">
+      <directory name="CascadeInput">
+        <variable name="scale">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Scaling factor</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="angle">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Rotation angle</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Enable the cascaded scaling and rotation</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <variable name="scale">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Scaling factor</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="angle">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>deg</unit>
+        <description>Rotation angle</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="limiterActive">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the limiter was active during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="prelimiterActive">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the pre-limiter was active during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="adcOverflow">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the ADC was overflowing during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="limiterDisable">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Disable the limiter if set to 1</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="vectorSumInclude">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Include channel in vector sum if set to 1</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="amplitude">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>MV</unit>
+      <description>Amplitude over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="phase">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>deg</unit>
+      <description>Phase over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="power">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>kW</unit>
+      <description>Computed power over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="raw">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>bits</unit>
+      <description>RAW ADC data if RAW DAQ is enabled</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="limiter">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits</unit>
+      <description>Threshold for the limiter</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="prelimiter">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits</unit>
+      <description>Threshold for the limiter</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <directory name="Samples">
+      <variable name="amplitude">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phase">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="power">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>kW</unit>
+        <description>Power</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="powerAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Power averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeStandardDeviation">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Standard deviation of amplitude over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseStandardDeviation">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Standard deviation over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <directory name="Filter">
+      <variable name="type">
+        <value_type>int32</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>0: no filter, 1: notch, 2: low-pass, 3: block signal</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="bandwidth">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>kHz</unit>
+        <description>Filter bandwidth (only for notch filter)</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="frequency">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>kHz</unit>
+        <description>Filter center/corner frequency (only for notch and low-pass filters)</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="channelNumber">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>n./a.</unit>
+      <description></description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="attenuation">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>dB</unit>
+      <description>Attenuation for channel 6</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+  </directory>
+  <directory name="VMLoop">
+    <directory name="Calibration">
+      <directory name="CascadeInput">
+        <variable name="scale">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Scaling factor</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="angle">
+          <value_type>double</value_type>
+          <direction>application_to_control_system</direction>
+          <unit>deg</unit>
+          <description>Rotation angle</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+        <variable name="enable">
+          <value_type>int32</value_type>
+          <direction>application_to_control_system</direction>
+          <unit></unit>
+          <description>Enable the cascaded scaling and rotation</description>
+          <numberOfElements>1</numberOfElements>
+        </variable>
+      </directory>
+      <variable name="scale">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>Scaling factor</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="angle">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>deg</unit>
+        <description>Rotation angle</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="limiterActive">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the limiter was active during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="prelimiterActive">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the pre-limiter was active during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="adcOverflow">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Flag whether the ADC was overflowing during the pulse</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="limiterDisable">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Disable the limiter if set to 1</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="vectorSumInclude">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Include channel in vector sum if set to 1</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="amplitude">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>MV</unit>
+      <description>Amplitude over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="phase">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>deg</unit>
+      <description>Phase over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="power">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>kW</unit>
+      <description>Computed power over time</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="raw">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>bits</unit>
+      <description>RAW ADC data if RAW DAQ is enabled</description>
+      <numberOfElements>16384</numberOfElements>
+    </variable>
+    <variable name="limiter">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits</unit>
+      <description>Threshold for the limiter</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="prelimiter">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>bits</unit>
+      <description>Threshold for the limiter</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <directory name="Samples">
+      <variable name="amplitude">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phase">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="power">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>kW</unit>
+        <description>Power</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Amplitude averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Phase averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="powerAverage">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Power averaged over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="amplitudeStandardDeviation">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>MV</unit>
+        <description>Standard deviation of amplitude over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="phaseStandardDeviation">
+        <value_type>double</value_type>
+        <direction>application_to_control_system</direction>
+        <unit>deg</unit>
+        <description>Standard deviation over the full pulse</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <directory name="Filter">
+      <variable name="type">
+        <value_type>int32</value_type>
+        <direction>control_system_to_application</direction>
+        <unit></unit>
+        <description>0: no filter, 1: notch, 2: low-pass, 3: block signal</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="bandwidth">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>kHz</unit>
+        <description>Filter bandwidth (only for notch filter)</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+      <variable name="frequency">
+        <value_type>double</value_type>
+        <direction>control_system_to_application</direction>
+        <unit>kHz</unit>
+        <description>Filter center/corner frequency (only for notch and low-pass filters)</description>
+        <numberOfElements>1</numberOfElements>
+      </variable>
+    </directory>
+    <variable name="channelNumber">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>n./a.</unit>
+      <description></description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="attenuation">
+      <value_type>double</value_type>
+      <direction>control_system_to_application</direction>
+      <unit>dB</unit>
+      <description>Attenuation for channel 7</description>
       <numberOfElements>1</numberOfElements>
     </variable>
   </directory>
