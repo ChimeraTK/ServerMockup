@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="https://github.com/ChimeraTK/ApplicationCore" name="WatchdogServer">
+  <directory name="SYS">
+    <variable name="bogomips">
+      <value_type>string</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>bogomips</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="cpu_MHz">
+      <value_type>string</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>cpu_MHz</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="cpu_family">
+      <value_type>string</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>cpu_family</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="family">
+      <value_type>string</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>family</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="model">
+      <value_type>string</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>model</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="model_name">
+      <value_type>string</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>model_name</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="stepping">
+      <value_type>string</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>stepping</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="vendor">
+      <value_type>string</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>vendor</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="nCPU">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Number of CPUs</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="maxMem">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>kB</unit>
+      <description>Maximum available memory</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="freeMem">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>kB</unit>
+      <description>Free memory</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="cachedMem">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>kB</unit>
+      <description>Cached memory</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="usedMem">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>kB</unit>
+      <description>Used memory</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="maxSwap">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>kB</unit>
+      <description>Swap size</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="freeSwap">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>kB</unit>
+      <description>Free swap</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="usedSwap">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>kB</unit>
+      <description>Used swap</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="startTimeS">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>s</unit>
+      <description>startTimeS</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="startTimeStr">
+      <value_type>string</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>s</unit>
+      <description>startTimeStr</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="uptimeSecTotal">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>s</unit>
+      <description>Total uptime</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="uptimeDays">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>day</unit>
+      <description>Days up</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="uptimeHours">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>h</unit>
+      <description>Hours up</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="uptimeMin">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>min</unit>
+      <description>Minutes up</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="uptimeSec">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>s</unit>
+      <description>Seconds up</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="loadAvg">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Average load within last min</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="loadAvg5">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Average load within last 5min</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="loadAvg15">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Average load within last 15min</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="cpuUsageTotal">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>%</unit>
+      <description>Total CPU usage</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="cpu1Usage">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>%</unit>
+      <description>CPU usage</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="cpu2Usage">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>%</unit>
+      <description>CPU usage</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="cpu3Usage">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>%</unit>
+      <description>CPU usage</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="cpu4Usage">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>%</unit>
+      <description>CPU usage</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+  </directory>
+  <directory name="watchdog">
+    <variable name="PID">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>PID of the process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="runtime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>s</unit>
+      <description>Time since process is running</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="utime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>clock ticks</unit>
+      <description>user-mode CPU time accumulated by process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="stime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>clock ticks</unit>
+      <description>kernel-mode CPU time accumulated by process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="cutime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>clock ticks</unit>
+      <description>cumulative utime of process and reaped children</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="cstime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>clock ticks</unit>
+      <description>cumulative stime of process and reaped children</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="startTime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>s</unit>
+      <description>start time of process with respect to system start [s]</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="startTimeStr">
+      <value_type>string</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>start time string</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="priority">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>kernel scheduling priority</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="nice">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>standard unix nice level of process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="rss">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>resident set size from /proc/#/stat (pages)</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="pcpu">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>%</unit>
+      <description>Actual CPU usage</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="avpcpu">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>%</unit>
+      <description>Average CPU usage</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+  </directory>
+  <directory name="PROCESS_1">
+    <variable name="enableProcess">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Start the process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="CMD">
+      <value_type>string</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Command used to start the process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="Path">
+      <value_type>string</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Path where to execute the command used to start the process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="killSig">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Signal used to kill the process (2: SIGINT, 9: SIGKILL)</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="pidOffset">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>PID offset used when monitoring the started process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="PID">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>PID of the process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="runtime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>s</unit>
+      <description>Time since process is running</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="utime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>clock ticks</unit>
+      <description>user-mode CPU time accumulated by process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="stime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>clock ticks</unit>
+      <description>kernel-mode CPU time accumulated by process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="cutime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>clock ticks</unit>
+      <description>cumulative utime of process and reaped children</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="cstime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>clock ticks</unit>
+      <description>cumulative stime of process and reaped children</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="startTime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>s</unit>
+      <description>start time of process with respect to system start [s]</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="startTimeStr">
+      <value_type>string</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>start time string</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="priority">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>kernel scheduling priority</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="nice">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>standard unix nice level of process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="rss">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>resident set size from /proc/#/stat (pages)</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="pcpu">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>%</unit>
+      <description>Actual CPU usage</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="avpcpu">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>%</unit>
+      <description>Average CPU usage</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="IsRunning">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Process status 0: not running, 1: running</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="Failed">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Number of failed restarts</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="nChilds">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Number of started processes</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="Restarts">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Number of time the process was automatically restarted by the watchdog since server start.</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+  </directory>
+  <directory name="PROCESS_2">
+    <variable name="enableProcess">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Start the process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="CMD">
+      <value_type>string</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Command used to start the process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="Path">
+      <value_type>string</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Path where to execute the command used to start the process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="killSig">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>Signal used to kill the process (2: SIGINT, 9: SIGKILL)</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="pidOffset">
+      <value_type>int32</value_type>
+      <direction>control_system_to_application</direction>
+      <unit></unit>
+      <description>PID offset used when monitoring the started process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="PID">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>PID of the process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="runtime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>s</unit>
+      <description>Time since process is running</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="utime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>clock ticks</unit>
+      <description>user-mode CPU time accumulated by process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="stime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>clock ticks</unit>
+      <description>kernel-mode CPU time accumulated by process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="cutime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>clock ticks</unit>
+      <description>cumulative utime of process and reaped children</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="cstime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>clock ticks</unit>
+      <description>cumulative stime of process and reaped children</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="startTime">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>s</unit>
+      <description>start time of process with respect to system start [s]</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="startTimeStr">
+      <value_type>string</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>start time string</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="priority">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>kernel scheduling priority</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="nice">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>standard unix nice level of process</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="rss">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>resident set size from /proc/#/stat (pages)</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="pcpu">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>%</unit>
+      <description>Actual CPU usage</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="avpcpu">
+      <value_type>double</value_type>
+      <direction>application_to_control_system</direction>
+      <unit>%</unit>
+      <description>Average CPU usage</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="IsRunning">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Process status 0: not running, 1: running</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="Failed">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Number of failed restarts</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="nChilds">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Number of started processes</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+    <variable name="Restarts">
+      <value_type>int32</value_type>
+      <direction>application_to_control_system</direction>
+      <unit></unit>
+      <description>Number of time the process was automatically restarted by the watchdog since server start.</description>
+      <numberOfElements>1</numberOfElements>
+    </variable>
+  </directory>
+</application>
