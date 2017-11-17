@@ -7,3 +7,11 @@ Since the server needs to know all variables during start time it expects an inp
 ```
 dummy_server_input.xml
 ```
+
+Usally what should be done is to create a softlink in the server directory:
+
+```
+ln -s LLRFServer.xml dummy_server_input.xml
+```
+
+The corresponding mapping file (in the example above LLRFServer_mapping.xml) will be considered automatically.

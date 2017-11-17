@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<uamapping>
-        <config rootFolder="dummy_server" description="Dummy server">
-                <serverConfig applicationName="dummy_server" port="16660" />
-                <!--login username="test" password="test123" /--> 
-        </config>
-</uamapping>
