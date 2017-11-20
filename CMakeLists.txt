@@ -15,17 +15,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fPIC -Wextra -ansi -Wuninitialize
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSER=\\\"`whoami`\\\" -DHOST=\\\"`hostname`\\\"")
 
 #use -DCMAKE_BUILD_TYPE=Debug in your cmake command to turn on the coverage option
-#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 --coverage -DDEBUG")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 --coverage")
-#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O3 --coverage")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
 
 # linker flags
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--export-dynamic -Wl,--no-as-needed")
 
 include(cmake/add_dependency.cmake)
 add_dependency(ChimeraTK-ApplicationCore 00.05 REQUIRED)
-
-find_library(procps NAMES procps REQUIRED)
 
 IF(ADAPTER STREQUAL "OPCUA")
   message("Building against the OPC UA ControlSystemAdater")
@@ -39,19 +35,7 @@ ELSE()
                       "   -DADAPTER=OPCUA to use OPC-UA")
 ENDIF()
 
-##################FIX THIS#########################################
-#check boost version that includes boost.process
-FIND_PACKAGE(Boost 1.64 COMPONENTS thread system filesystem unit_test_framework)
-
-IF(Boost_FOUND)
-  MESSAGE(STATUS "Found boost version that includes boost process (>1.64).")
-  add_definitions( "-DBOOST_1_64" )
-ELSE()
-  MESSAGE(STATUS "Found no boost version that includes boost process. Will use fork/exec.")
-  FIND_PACKAGE(Boost COMPONENTS thread system filesystem unit_test_framework)
-ENDIF(Boost_FOUND)
-ENABLE_TESTING()
-####################QUICK FIX#########################################
+FIND_PACKAGE(Boost COMPONENTS unit_test_framework)
 
 FIND_PACKAGE(PkgConfig REQUIRED)
 set(LIBXML++_VERSION "libxml++-2.6")
@@ -91,9 +75,7 @@ add_library(${PROJECT_NAME}lib SHARED ${library_sources} )
 set_target_properties(${PROJECT_NAME}lib PROPERTIES VERSION ${${PROJECT_NAME}_FULL_LIBRARY_VERSION}
                                                     SOVERSION ${${PROJECT_NAME}_SOVERSION})
 target_link_libraries(${PROJECT_NAME}lib ${Boost_LIBRARIES}
-                                         ${ChimeraTK-ApplicationCore_LIBRARIES}
-                                         procps
-                                         ${Boost_process_LIBRARIES})
+                                         ${ChimeraTK-ApplicationCore_LIBRARIES})
 
 # main server executable
 add_executable(${PROJECT_NAME} ${server_sources})
@@ -104,36 +86,15 @@ add_executable(${PROJECT_NAME}-xmlGenerator ${server_sources})
 set_target_properties(${PROJECT_NAME}-xmlGenerator PROPERTIES COMPILE_FLAGS "-DGENERATE_XML")
 target_link_libraries(${PROJECT_NAME}-xmlGenerator ${PROJECT_NAME}lib)
 
-#add_custom_target(${PROJECT_NAME}-xml ALL DEPENDS ${PROJECT_NAME}-xmlGenerator COMMAND ${PROJECT_BINARY_DIR}/${PROJECT_NAME}-xmlGenerator WORKING_DIRECTORY ${PROJECT_BINARY_DIR})
+add_custom_target(${PROJECT_NAME}-xml ALL DEPENDS ${PROJECT_NAME}-xmlGenerator COMMAND ${PROJECT_BINARY_DIR}/${PROJECT_NAME}-xmlGenerator WORKING_DIRECTORY ${PROJECT_BINARY_DIR})
 
 # Create the executable for automated unit testing.
 # add the test executable with all test source files
 aux_source_directory(${CMAKE_SOURCE_DIR}/test test_sources)
 include_directories(${CMAKE_SOURCE_DIR}/test)
 add_executable(test_${PROJECT_NAME} ${test_sources})
-target_link_libraries(test_${PROJECT_NAME} ${PROJECT_NAME}lib ${Boost_LIBRARIES}  )
+target_link_libraries(test_${PROJECT_NAME} ${PROJECT_NAME}lib ${Boost_LIBRARIES} ${LibXML++_LDFLAGS} )
 add_test(test_${PROJECT_NAME} test_${PROJECT_NAME})
-
-# The make coverage command is only available in debug mode
-IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
-  #configure_file(cmake/Makefile.coverage.in ${PROJECT_BINARY_DIR}/Makefile.coverage @ONLY)
-  #add_custom_target(coverage
-  #  make -f Makefile.coverage
-  #  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-  #  COMMENT "Generating test coverage documentation" VERBATIM
-  #)
-ENDIF(CMAKE_BUILD_TYPE STREQUAL "Debug")
-
-# copy config file for running in virtuallab environment
-FILE( COPY ${CMAKE_SOURCE_DIR}/configs/devMapFile.dmap DESTINATION ${PROJECT_BINARY_DIR})
-FILE( COPY ${CMAKE_SOURCE_DIR}/configs/${PROJECT_NAME}.xlmap DESTINATION ${PROJECT_BINARY_DIR})
-FILE( COPY ${CMAKE_SOURCE_DIR}/configs/${PROJECT_NAME}_input.xml DESTINATION ${PROJECT_BINARY_DIR})
-IF(ADAPTER STREQUAL "OPCUA")
-  FILE( COPY ${CMAKE_SOURCE_DIR}/configs/dummy_server_mapping.xml DESTINATION ${PROJECT_BINARY_DIR})
-#  FILE( COPY ${CMAKE_SOURCE_DIR}/serverTypes/${TYPE}/configs/LLRFServer.persist DESTINATION ${PROJECT_BINARY_DIR})
-ELSEIF(ADAPTER STREQUAL "DOOCS")
-  FILE( COPY ${CMAKE_SOURCE_DIR}/configs/${PROJECT_NAME}.conf DESTINATION ${PROJECT_BINARY_DIR})
-ENDIF()
 
 # Install the executable and the RPC_LIBNO file
 if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/export/doocs/server")
@@ -145,19 +106,3 @@ else()
   install(TARGETS ${PROJECT_NAME}lib LIBRARY DESTINATION lib)
   # the RPC_LIBNO file is not installed when not following the DOOCS directory scheme
 endif()
-
-find_package(Doxygen)
-if(DOXYGEN_FOUND)
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/doc/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
-
-  add_custom_target(doc ${DOC_DEPENDENCY}
-    ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    )
-  #note the / after ${CMAKE_BINARY_DIR}/doc/. This causes the directory to be renamed to the destination, not copied into
-  install(DIRECTORY ${CMAKE_BINARY_DIR}/doc/ DESTINATION share/doc/${PROJECT_NAME}-${${PROJECT_NAME}_SOVERSION}
-          COMPONENT doc
-          OPTIONAL)
-else(DOXYGEN_FOUND)
-  message("Doxygen not found, documentation cannot be build.")
-endif(DOXYGEN_FOUND)
