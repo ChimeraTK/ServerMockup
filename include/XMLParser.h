@@ -10,6 +10,8 @@
 
 #include <libxml++/libxml++.h>
 
+namespace xml_parser{
+
 enum varType { Int32, UInt32, Double, Float, String, Unknown};
 
 struct variable{
@@ -39,6 +41,6 @@ public:
 
 };
 
-
+}
 
 #endif /* INCLUDE_XMLPARSER_H_ */

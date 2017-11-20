@@ -11,6 +11,8 @@
 #include <iostream>
 #include <exception>
 
+using namespace xml_parser;
+
 void variable::print(){
   std::cout << "Name: " << name << "\t Directory: " << directory << "\t Desc: " << desciption << "\t unit: " << unit << "\t type: " << type << std::endl;
 }
@@ -110,7 +112,7 @@ void XMLParser::parse(){
 
 }
 
-std::string getRootDir(std::string inputFile){
+std::string xml_parser::getRootDir(std::string inputFile){
   xmlpp::DomParser parser;
   parser.parse_file(inputFile);
   const auto root = parser.get_document()->get_root_node();

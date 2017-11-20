@@ -13,24 +13,24 @@ XMLModule::XMLModule(EntityOwner *owner, const std::string &name,
     const std::unordered_set<std::string> &tags) :
     ctk::ApplicationModule(owner, name, description, eliminateHierarchy, tags) {
 
-  XMLParser parser(INPUT);
+  xml_parser::XMLParser parser(INPUT);
   parser.parse();
 
   for(auto &var : parser.vars){
     var.print();
-    if(var.type == varType::Int32){
+    if(var.type == xml_parser::varType::Int32){
       intParameter[make_pair(var.directory, var.name)].replace(ctk::ScalarOutput<int>{this, var.name, var.unit, var.desciption,
                       { "CS" }});
-    } else if (var.type == varType::UInt32){
+    } else if (var.type == xml_parser::varType::UInt32){
       uintParameter[make_pair(var.directory, var.name)].replace(ctk::ScalarOutput<uint>{this, var.name, var.unit, var.desciption,
                                   { "CS" }});
-    } else if (var.type == varType::Double){
+    } else if (var.type == xml_parser::varType::Double){
       doubleParameter[make_pair(var.directory, var.name)].replace(ctk::ScalarOutput<double>{this, var.name, var.unit, var.desciption,
                             { "CS" }});
-    } else if (var.type == varType::Float){
+    } else if (var.type == xml_parser::varType::Float){
       floatParameter[make_pair(var.directory, var.name)].replace(ctk::ScalarOutput<float>{this, var.name, var.unit, var.desciption,
                                   { "CS" }});
-    } else if (var.type == varType::String){
+    } else if (var.type == xml_parser::varType::String){
       stringParameter[make_pair(var.directory, var.name)].replace(ctk::ScalarOutput<std::string>{this, var.name, var.unit, var.desciption,
                                   { "CS" }});
     }

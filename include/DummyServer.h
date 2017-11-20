@@ -38,7 +38,7 @@ struct XMLModule: public ctk::ApplicationModule {
 
 struct DummyServer: public ctk::Application {
 
-  DummyServer() : Application(getRootDir(std::string(INPUT))) {}
+  DummyServer() : Application(xml_parser::getRootDir(std::string(INPUT))) {}
   ~DummyServer() {
     shutdown();
   }
