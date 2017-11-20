@@ -14,6 +14,7 @@
 #define INPUT "dummy_server_input.xml"
 
 #include <string>
+#include <unordered_set>
 #include "XMLParser.h"
 
 namespace ctk = ChimeraTK;
