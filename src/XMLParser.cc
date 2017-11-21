@@ -116,10 +116,10 @@ std::string xml_parser::getRootDir(std::string inputFile){
   xmlpp::DomParser parser;
   parser.parse_file(inputFile);
   const auto root = parser.get_document()->get_root_node();
-//  if(root->get_name() != "application") {
-//    throw xmlpp::exception(
-//        "Expected root tag 'application' instead of: " + root->get_name());
-//  }
+  if(root->get_name() != "application") {
+    throw xmlpp::exception(
+        "Expected root tag 'application' instead of: " + root->get_name());
+  }
   return std::string(root->get_attribute_value("name").c_str());
 }
 
