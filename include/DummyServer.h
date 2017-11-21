@@ -38,17 +38,18 @@ struct XMLModule: public ctk::ApplicationModule {
       const std::string &description, bool eliminateHierarchy = false,
       const std::unordered_set<std::string> &tags = { });
   /**
-   * The map key contains the directory and the variable name.
-   * This is needed to make the correct connection.
+   * The variable is needed to make correct connections. Name and directory information
+   * is used to reconstruct the variable tree. Don't use a map, which avoids to define the
+   * comparison operator of variables.
    * \remark
    * At the time of defining the connections (defineConnections()) the name of the
-   * ScalarOutput is not yet available! This is the reason why the name is stored here too.
+   * ScalarOutput is not yet available!
    */
-  std::map<std::pair<std::string, std::string>, ctk::ScalarOutput<std::string> > stringParameter;
-  std::map<std::pair<std::string, std::string>, ctk::ScalarOutput<int> > intParameter;
-  std::map<std::pair<std::string, std::string>, ctk::ScalarOutput<uint> > uintParameter;
-  std::map<std::pair<std::string, std::string>, ctk::ScalarOutput<double> > doubleParameter;
-  std::map<std::pair<std::string, std::string>, ctk::ScalarOutput<float> > floatParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ScalarOutput<std::string> > > stringParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ScalarOutput<int> > > intParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ScalarOutput<uint> > > uintParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ScalarOutput<double> > > doubleParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ScalarOutput<float> > > floatParameter;
 
   /**
    * Application core main loop.

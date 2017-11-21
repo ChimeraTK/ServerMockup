@@ -19,20 +19,20 @@ XMLModule::XMLModule(EntityOwner *owner, const std::string &name,
   for(auto &var : parser.vars){
     var.print();
     if(var.type == xml_parser::varType::Int32){
-      intParameter[make_pair(var.directory, var.name)].replace(ctk::ScalarOutput<int>{this, var.name, var.unit, var.desciption,
-                      { "CS" }});
+      intParameter.emplace_back(std::move(std::make_pair(var, ctk::ScalarOutput<int>{this, var.name, var.unit, var.desciption,
+                      { "CS" }})));
     } else if (var.type == xml_parser::varType::UInt32){
-      uintParameter[make_pair(var.directory, var.name)].replace(ctk::ScalarOutput<uint>{this, var.name, var.unit, var.desciption,
-                                  { "CS" }});
+      uintParameter.emplace_back(std::move(std::make_pair(var, ctk::ScalarOutput<uint>{this, var.name, var.unit, var.desciption,
+                                  { "CS" }})));
     } else if (var.type == xml_parser::varType::Double){
-      doubleParameter[make_pair(var.directory, var.name)].replace(ctk::ScalarOutput<double>{this, var.name, var.unit, var.desciption,
-                            { "CS" }});
+      doubleParameter.emplace_back(std::move(std::make_pair(var, ctk::ScalarOutput<double>{this, var.name, var.unit, var.desciption,
+                            { "CS" }})));
     } else if (var.type == xml_parser::varType::Float){
-      floatParameter[make_pair(var.directory, var.name)].replace(ctk::ScalarOutput<float>{this, var.name, var.unit, var.desciption,
-                                  { "CS" }});
+      floatParameter.emplace_back(std::move(std::make_pair(var, ctk::ScalarOutput<float>{this, var.name, var.unit, var.desciption,
+                                  { "CS" }})));
     } else if (var.type == xml_parser::varType::String){
-      stringParameter[make_pair(var.directory, var.name)].replace(ctk::ScalarOutput<std::string>{this, var.name, var.unit, var.desciption,
-                                  { "CS" }});
+      stringParameter.emplace_back(std::move(std::make_pair(var, ctk::ScalarOutput<std::string>{this, var.name, var.unit, var.desciption,
+                                  { "CS" }})));
     }
   }
 
@@ -48,25 +48,24 @@ void XMLModule::mainLoop(){
 
 void DummyServer::defineConnections(){
   for(auto  i = xml.intParameter.begin(), e = xml.intParameter.end(); i != e; i++){
-    std::cout << "Adding: " << i->first.first << "\t" << i->first.second << std::endl;
-    i->second >> cs[i->first.first](i->first.second);
+    std::cout << "Adding: " << i->first.directory << "\t" << i->first.name << std::endl;
+    i->second >> cs[i->first.directory](i->first.name);
   }
   for(auto  i = xml.uintParameter.begin(), e = xml.uintParameter.end(); i != e; i++){
-    std::cout << "Adding: " << i->first.first << "\t" << i->first.second << std::endl;
-    i->second >> cs[i->first.first](i->first.second);
+    std::cout << "Adding: " << i->first.directory << "\t" << i->first.name << std::endl;
+    i->second >> cs[i->first.directory](i->first.name);
   }
   for(auto  i = xml.stringParameter.begin(), e = xml.stringParameter.end(); i != e; i++){
-    std::cout << "Adding: " << i->first.first << "\t" << i->first.second << std::endl;
-    i->second >> cs[i->first.first](i->first.second);
+    std::cout << "Adding: " << i->first.directory << "\t" << i->first.name << std::endl;
+    i->second >> cs[i->first.directory](i->first.name);
   }
   for(auto  i = xml.doubleParameter.begin(), e = xml.doubleParameter.end(); i != e; i++){
-    std::cout << "Adding: " << i->first.first << "\t" << i->first.second << std::endl;
-    i->second >> cs[i->first.first](i->first.second);
+    std::cout << "Adding: " << i->first.directory << "\t" << i->first.name << std::endl;
+    i->second >> cs[i->first.directory](i->first.name);
   }
   for(auto  i = xml.floatParameter.begin(), e = xml.floatParameter.end(); i != e; i++){
-    std::cout << "Adding: " << i->first.first << "\t" << i->first.second << std::endl;
-    i->second >> cs[i->first.first](i->first.second);
+    std::cout << "Adding: " << i->first.directory << "\t" << i->first.name << std::endl;
+    i->second >> cs[i->first.directory](i->first.name);
   }
-
   dumpConnections();
 }
