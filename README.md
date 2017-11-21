@@ -15,3 +15,8 @@ ln -s LLRFServer.xml dummy_server_input.xml
 ```
 
 The corresponding mapping file (in the example above LLRFServer_mapping.xml) will be considered automatically.
+In case the DOOCS adapter is used the *conf file is required. Again create a symbolic like to the original server config file:
+
+```
+ln -s LLRFServer.conf dummy_server.conf
+```
