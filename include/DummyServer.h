@@ -18,11 +18,32 @@
 #include "XMLParser.h"
 
 namespace ctk = ChimeraTK;
-
+/**
+ * This module holds all control system variables read from the input xml file.
+ * \attention
+ * So far only the following types are supported:
+ * - string
+ * - int
+ * - uint
+ * - double
+ * - float
+ * If other types are used in the input xml file the module needs to be extended!
+ */
 struct XMLModule: public ctk::ApplicationModule {
+  /**
+   * Constructor
+   * The default constructor is not used, since the maps are filled during construction.
+   */
   XMLModule(EntityOwner *owner, const std::string &name,
       const std::string &description, bool eliminateHierarchy = false,
       const std::unordered_set<std::string> &tags = { });
+  /**
+   * The map key contains the directory and the variable name.
+   * This is needed to make the correct connection.
+   * \remark
+   * At the time of defining the connections (defineConnections()) the name of the
+   * ScalarOutput is not yet available! This is the reason why the name is stored here too.
+   */
   std::map<std::pair<std::string, std::string>, ctk::ScalarOutput<std::string> > stringParameter;
   std::map<std::pair<std::string, std::string>, ctk::ScalarOutput<int> > intParameter;
   std::map<std::pair<std::string, std::string>, ctk::ScalarOutput<uint> > uintParameter;
@@ -44,7 +65,7 @@ struct DummyServer: public ctk::Application {
   }
 
   XMLModule xml { this, "xmlModule",
-    "Module reading and publishing all variables from the input xml file" };
+    "Module publishing all variables from the input xml file" };
 
   ctk::ControlSystemModule cs;
 
