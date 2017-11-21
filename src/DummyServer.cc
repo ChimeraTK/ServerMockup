@@ -19,20 +19,20 @@ XMLModule::XMLModule(EntityOwner *owner, const std::string &name,
   for(auto &var : parser.vars){
     var.print();
     if(var.type == xml_parser::varType::Int32){
-      intParameter.emplace_back(std::move(std::make_pair(var, ctk::ScalarOutput<int>{this, var.name, var.unit, var.desciption,
-                      { "CS" }})));
+      intParameter.emplace_back(std::make_pair(var, ctk::ScalarOutput<int>{this, var.name, var.unit, var.desciption,
+        { "CS" }}));
     } else if (var.type == xml_parser::varType::UInt32){
-      uintParameter.emplace_back(std::move(std::make_pair(var, ctk::ScalarOutput<uint>{this, var.name, var.unit, var.desciption,
-                                  { "CS" }})));
+      uintParameter.emplace_back(std::make_pair(var, ctk::ScalarOutput<uint>{this, var.name, var.unit, var.desciption,
+        { "CS" }}));
     } else if (var.type == xml_parser::varType::Double){
-      doubleParameter.emplace_back(std::move(std::make_pair(var, ctk::ScalarOutput<double>{this, var.name, var.unit, var.desciption,
-                            { "CS" }})));
+      doubleParameter.emplace_back(std::make_pair(var, ctk::ScalarOutput<double>{this, var.name, var.unit, var.desciption,
+        { "CS" }}));
     } else if (var.type == xml_parser::varType::Float){
-      floatParameter.emplace_back(std::move(std::make_pair(var, ctk::ScalarOutput<float>{this, var.name, var.unit, var.desciption,
-                                  { "CS" }})));
+      floatParameter.emplace_back(std::make_pair(var, ctk::ScalarOutput<float>{this, var.name, var.unit, var.desciption,
+        { "CS" }}));
     } else if (var.type == xml_parser::varType::String){
-      stringParameter.emplace_back(std::move(std::make_pair(var, ctk::ScalarOutput<std::string>{this, var.name, var.unit, var.desciption,
-                                  { "CS" }})));
+      stringParameter.emplace_back(std::make_pair(var, ctk::ScalarOutput<std::string>{this, var.name, var.unit, var.desciption,
+        { "CS" }}));
     }
   }
 
@@ -41,7 +41,13 @@ XMLModule::XMLModule(EntityOwner *owner, const std::string &name,
 
 void XMLModule::mainLoop(){
   while(1){
-    sleep(0.5);
+    /**
+     * \internal
+     *  Setting an interruption point is included in read() methods of ChimeraTK but not in write()!
+     *  Anyway here we don't call read() or write() and thus set it by hand here!
+     */
+    boost::this_thread::interruption_point();
+    sleep(2);
   }
 }
 
