@@ -8,6 +8,8 @@
 #include "DummyServer.h"
 #include "XMLParser.h"
 
+#include <boost/thread/thread.hpp>
+
 XMLModule::XMLModule(EntityOwner *owner, const std::string &name,
     const std::string &description, bool eliminateHierarchy,
     const std::unordered_set<std::string> &tags) :

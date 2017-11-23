@@ -18,7 +18,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSER=\\\"`whoami`\\\" -DHOST=\\\"`host
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
 
 # linker flags
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--export-dynamic -Wl,--no-as-needed")
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--export-dynamic -Wl,--no-as-needed -Wl,--enable-new-dtags")
 
 include(cmake/add_dependency.cmake)
 add_dependency(ChimeraTK-ApplicationCore 00.05 REQUIRED)
@@ -35,7 +35,7 @@ ELSE()
                       "   -DADAPTER=OPCUA to use OPC-UA")
 ENDIF()
 
-FIND_PACKAGE(Boost COMPONENTS unit_test_framework)
+FIND_PACKAGE(Boost COMPONENTS unit_test_framework thread)
 
 FIND_PACKAGE(PkgConfig REQUIRED)
 set(LIBXML++_VERSION "libxml++-2.6")
@@ -43,11 +43,6 @@ PKG_CHECK_MODULES(LibXML++ REQUIRED ${LIBXML++_VERSION})
 PKG_CHECK_MODULES(glib REQUIRED glib-2.0)
 include_directories(SYSTEM "${LibXML++_INCLUDEDIR}/${LIBXML++_VERSION}")
 include_directories(${LibXML++_INCLUDE_DIRS})
-
-# extend compiler flags with flags from dependencies
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ChimeraTK-ControlSystemAdapter-DoocsAdapter_CXX_FLAGS} ${ChimeraTK-ControlSystemAdapter-OPCUAAdapter_CXX_FLAGS} ${ChimeraTK-ApplicationCore_CXX_FLAGS}" )
-
-set(CMAKE_EXE_LINKER_FLAGS "-Wl,--no-as-needed ${ChimeraTK-ControlSystemAdapter-DoocsAdapter_LINK_FLAGS} ${ChimeraTK-ControlSystemAdapter-OPCUAAdapter_LINK_FLAGS} ${ChimeraTK-ApplicationCore_LINK_FLAGS}")
 
 # set include directories
 include_directories(${CMAKE_SOURCE_DIR}/include)
@@ -85,8 +80,6 @@ target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}lib ${ChimeraTK-ControlSyst
 add_executable(${PROJECT_NAME}-xmlGenerator ${server_sources})
 set_target_properties(${PROJECT_NAME}-xmlGenerator PROPERTIES COMPILE_FLAGS "-DGENERATE_XML")
 target_link_libraries(${PROJECT_NAME}-xmlGenerator ${PROJECT_NAME}lib)
-
-add_custom_target(${PROJECT_NAME}-xml ALL DEPENDS ${PROJECT_NAME}-xmlGenerator COMMAND ${PROJECT_BINARY_DIR}/${PROJECT_NAME}-xmlGenerator WORKING_DIRECTORY ${PROJECT_BINARY_DIR})
 
 # Create the executable for automated unit testing.
 # add the test executable with all test source files
