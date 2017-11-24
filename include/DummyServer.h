@@ -45,11 +45,29 @@ struct XMLModule: public ctk::ApplicationModule {
    * At the time of defining the connections (defineConnections()) the name of the
    * ScalarOutput is not yet available!
    */
-  std::vector<std::pair<xml_parser::variable, ctk::ScalarOutput<std::string> > > stringParameter;
-  std::vector<std::pair<xml_parser::variable, ctk::ScalarOutput<int> > > intParameter;
-  std::vector<std::pair<xml_parser::variable, ctk::ScalarOutput<uint> > > uintParameter;
-  std::vector<std::pair<xml_parser::variable, ctk::ScalarOutput<double> > > doubleParameter;
-  std::vector<std::pair<xml_parser::variable, ctk::ScalarOutput<float> > > floatParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ScalarOutput<std::string> > >    out_stringParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ScalarOutput<int> > >            out_intParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ScalarOutput<uint> > >           out_uintParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ScalarOutput<double> > >         out_doubleParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ScalarOutput<float> > >          out_floatParameter;
+
+  std::vector<std::pair<xml_parser::variable, ctk::ScalarPollInput<std::string> > > in_stringParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ScalarPollInput<int> > >         in_intParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ScalarPollInput<uint> > >        in_uintParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ScalarPollInput<double> > >      in_doubleParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ScalarPollInput<float> > >       in_floatParameter;
+
+  std::vector<std::pair<xml_parser::variable, ctk::ArrayOutput<std::string> > >     aout_stringParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ArrayOutput<int> > >             aout_intParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ArrayOutput<uint> > >            aout_uintParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ArrayOutput<double> > >          aout_doubleParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ArrayOutput<float> > >           aout_floatParameter;
+
+  std::vector<std::pair<xml_parser::variable, ctk::ArrayPollInput<std::string> > >  ain_stringParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ArrayPollInput<int> > >          ain_intParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ArrayPollInput<uint> > >         ain_uintParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ArrayPollInput<double> > >       ain_doubleParameter;
+  std::vector<std::pair<xml_parser::variable, ctk::ArrayPollInput<float> > >        ain_floatParameter;
 
   /**
    * Application core main loop.

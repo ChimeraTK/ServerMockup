@@ -14,7 +14,20 @@
 using namespace xml_parser;
 
 void variable::print(){
-  std::cout << "Name: " << name << "\t Directory: " << directory << "\t Desc: " << desciption << "\t unit: " << unit << "\t type: " << type << std::endl;
+  if(dir == direction::IN){
+    std::cout << directory << "/" << name << " (read/write)"
+    << "\t Desc: " << desciption
+    << "\t unit: " << unit
+    << "\t type: " << type
+    << "\t number of elements: " << nElements << std::endl;
+  } else {
+    std::cout << directory << "/" << name << " (read only)"
+    << " (read only)\t Directory: " << directory
+    << "\t Desc: " << desciption
+    << "\t unit: " << unit
+    << "\t type: " << type
+    << "\t number of elements: " << nElements << std::endl;
+  }
 }
 
 void XMLParser::readVariable(const xmlpp::Element* element, std::string directory){
@@ -64,8 +77,21 @@ void XMLParser::readVariable(const xmlpp::Element* element, std::string director
           tmp.type = varType::Float;
         } else {
           tmp.type = varType::Unknown;
-          std::cout << "Read unknown type: " << node->get_child_text()->get_content().c_str() << std::endl;
+          std::cerr << "Read unknown type: " << node->get_child_text()->get_content().c_str() << std::endl;
         }
+      } else if (child->get_name() == "direction"){
+        std::string type =  node->get_child_text()->get_content().c_str();
+        if(type.compare("application_to_control_system") == 0){
+          tmp.dir = direction::OUT;
+        } else if (type.compare("control_system_to_application") == 0){
+          tmp.dir = direction::IN;
+        } else {
+          std::stringstream ss;
+          ss << "Unknown data flow direction: " << type;
+          throw std::runtime_error(ss.str());
+        }
+      } else if (child->get_name() == "numberOfElements"){
+        tmp.nElements = atoi(node->get_child_text()->get_content().c_str());
       } else {
         std::cout << "Did not consider the following variable information: " + child->get_name() << std::endl;
       }

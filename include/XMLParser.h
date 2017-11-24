@@ -19,14 +19,21 @@ namespace xml_parser{
 enum varType { Int32, UInt32, Double, Float, String, Unknown};
 
 /**
+ * Possible directions of data flow
+ */
+enum direction{ IN, OUT };
+
+/**
  * The struct holds all information stored in OPCUA for individual variables.
  */
 struct variable{
   varType type;
+  direction dir;
   std::string desciption;
   std::string unit;
   std::string name;
   std::string directory;
+  size_t      nElements;
   void print();
 };
 
