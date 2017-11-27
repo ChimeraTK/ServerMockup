@@ -22,7 +22,7 @@ void variable::print(){
     << "\t number of elements: " << nElements << std::endl;
   } else {
     std::cout << directory << "/" << name << " (read only)"
-    << " (read only)\t Directory: " << directory
+    << "\t Directory: " << directory
     << "\t Desc: " << desciption
     << "\t unit: " << unit
     << "\t type: " << type
