@@ -18,6 +18,25 @@
 #include "XMLParser.h"
 
 namespace ctk = ChimeraTK;
+
+/**
+ * This module is used to trigger the mainloops of the modules to go on.
+ */
+struct TimerModule: public ctk::ApplicationModule {
+  using ctk::ApplicationModule::ApplicationModule;
+  /**
+   * \remark
+   * Observe this vaiable by other modules to obtain a trigger
+   */
+  ctk::ScalarOutput<int> trigger { this, "trigger", "", "Trigger counter",
+    { "Timer" }};
+
+  /**
+   * Application core main loop.
+   */
+  void mainLoop();
+};
+
 /**
  * This module holds all control system variables read from the input xml file.
  * \attention
@@ -37,6 +56,10 @@ struct XMLModule: public ctk::ApplicationModule {
   XMLModule(EntityOwner *owner, const std::string &name,
       const std::string &description, bool eliminateHierarchy = false,
       const std::unordered_set<std::string> &tags = { });
+
+  ctk::ScalarPushInput<int> trigger { this, "trigger", "",
+      "Trigger used to update the watchdog" };
+
   /**
    * The variable is needed to make correct connections. Name and directory information
    * is used to reconstruct the variable tree. Don't use a map, which avoids to define the
@@ -85,6 +108,9 @@ struct DummyServer: public ctk::Application {
 
   XMLModule xml { this, "xmlModule",
     "Module publishing all variables from the input xml file" };
+
+  TimerModule timer { this, "timer",
+      "Module used to trigger the watchdog update" };
 
   ctk::ControlSystemModule cs;
 

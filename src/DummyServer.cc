@@ -10,6 +10,20 @@
 
 #include <boost/thread/thread.hpp>
 
+void TimerModule::mainLoop() {
+  while(true) {
+    /**
+     * \internal
+     *  Setting an interruption point is included in read() methods of ChimeraTK but not in write()!
+     *  Thus set it by hand here!
+     */
+    boost::this_thread::interruption_point();
+    trigger = trigger + 1;
+    trigger.write();
+    sleep(2);
+  }
+}
+
 XMLModule::XMLModule(EntityOwner *owner, const std::string &name,
     const std::string &description, bool eliminateHierarchy,
     const std::unordered_set<std::string> &tags) :
@@ -126,18 +140,14 @@ XMLModule::XMLModule(EntityOwner *owner, const std::string &name,
 
 void XMLModule::mainLoop(){
   while(1){
-    /**
-     * \internal
-     *  Setting an interruption point is included in read() methods of ChimeraTK but not in write()!
-     *  Anyway here we don't call read() or write() and thus set it by hand here!
-     */
-    boost::this_thread::interruption_point();
-    sleep(2);
+    trigger.read();
   }
 }
 
 
 void DummyServer::defineConnections(){
+  timer.trigger >> xml.trigger;
+
   for(auto  i = xml.in_intParameter.begin(), e = xml.in_intParameter.end(); i != e; i++){
     cs[i->first.directory](i->first.name) >> i->second;
   }
