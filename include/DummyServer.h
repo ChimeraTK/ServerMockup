@@ -47,6 +47,11 @@ struct TimerModule: public ctk::ApplicationModule {
  * - double
  * - float
  * If other types are used in the input xml file the module needs to be extended!
+ *
+ * \remark
+ * In principle no TimerModule is needed here. One could simply use a trigger variable
+ * in the control system, which will never be changed. Thus the main loop of the XMLModule
+ * would be blocked forever.
  */
 struct XMLModule: public ctk::ApplicationModule {
   /**

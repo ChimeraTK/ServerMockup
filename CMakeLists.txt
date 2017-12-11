@@ -36,6 +36,8 @@ ELSE()
 ENDIF()
 
 FIND_PACKAGE(Boost COMPONENTS unit_test_framework thread)
+ENABLE_TESTING()
+
 
 FIND_PACKAGE(PkgConfig REQUIRED)
 set(LIBXML++_VERSION "libxml++-2.6")
@@ -83,11 +85,13 @@ target_link_libraries(${PROJECT_NAME}-xmlGenerator ${PROJECT_NAME}lib)
 
 # Create the executable for automated unit testing.
 # add the test executable with all test source files
-aux_source_directory(${CMAKE_SOURCE_DIR}/test test_sources)
-include_directories(${CMAKE_SOURCE_DIR}/test)
-add_executable(test_${PROJECT_NAME} ${test_sources})
-target_link_libraries(test_${PROJECT_NAME} ${PROJECT_NAME}lib ${Boost_LIBRARIES} ${LibXML++_LDFLAGS} )
-add_test(test_${PROJECT_NAME} test_${PROJECT_NAME})
+add_executable(testCounter ${CMAKE_SOURCE_DIR}/test/testCounter.C)
+target_link_libraries(testCounter ${PROJECT_NAME}lib ${Boost_LIBRARIES} )
+add_test(testCounter testCounter)
+
+add_executable(test_parsing ${CMAKE_SOURCE_DIR}/test/test_parsing.C)
+target_link_libraries(test_parsing ${PROJECT_NAME}lib ${Boost_LIBRARIES} ${LibXML++_LDFLAGS} )
+add_test(test_parsing test_parsing)
 
 # Install the executable and the RPC_LIBNO file
 if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/export/doocs/server")
