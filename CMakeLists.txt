@@ -1,4 +1,4 @@
-PROJECT(dummy_server)
+PROJECT(ServerMockup)
 cmake_minimum_required(VERSION 2.8)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
@@ -61,45 +61,33 @@ include_directories(${PROJECT_BINARY_DIR}/version)
 
 # keep the rpath in the installed executable and library to correctly find the dependencies
 if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/export/doocs/server")
-  SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}/lib")
+  SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}")
 else()
   SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 endif()
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
-# server library (to avoid compiling everyting multiple times)
-add_library(${PROJECT_NAME}lib SHARED ${library_sources} )
-set_target_properties(${PROJECT_NAME}lib PROPERTIES VERSION ${${PROJECT_NAME}_FULL_LIBRARY_VERSION}
-                                                    SOVERSION ${${PROJECT_NAME}_SOVERSION})
-target_link_libraries(${PROJECT_NAME}lib ${Boost_LIBRARIES}
-                                         ${ChimeraTK-ApplicationCore_LIBRARIES})
-
 # main server executable
-add_executable(${PROJECT_NAME} ${server_sources})
-target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}lib ${ChimeraTK-ControlSystemAdapter-DoocsAdapter_LIBRARIES} ${ChimeraTK-ControlSystemAdapter-OPCUAAdapter_LIBRARIES})
-
-# XML file generation
-add_executable(${PROJECT_NAME}-xmlGenerator ${server_sources})
-set_target_properties(${PROJECT_NAME}-xmlGenerator PROPERTIES COMPILE_FLAGS "-DGENERATE_XML")
-target_link_libraries(${PROJECT_NAME}-xmlGenerator ${PROJECT_NAME}lib)
+add_executable(${PROJECT_NAME} ${server_sources} ${library_sources})
+target_link_libraries(${PROJECT_NAME} ${ChimeraTK-ApplicationCore_LIBRARIES}
+                                      ${ChimeraTK-ControlSystemAdapter-DoocsAdapter_LIBRARIES} 
+                                      ${ChimeraTK-ControlSystemAdapter-OPCUAAdapter_LIBRARIES} 
+                                      ${LibXML++_LIBRARIES})
 
 # Create the executable for automated unit testing.
 # add the test executable with all test source files
-add_executable(testCounter ${CMAKE_SOURCE_DIR}/test/testCounter.C)
-target_link_libraries(testCounter ${PROJECT_NAME}lib ${Boost_LIBRARIES} )
+add_executable(testCounter ${CMAKE_SOURCE_DIR}/test/testCounter.C ${library_sources})
+target_link_libraries(testCounter ${ChimeraTK-ApplicationCore_LIBRARIES} ${Boost_LIBRARIES} ${LibXML++_LIBRARIES})
 add_test(testCounter testCounter)
 
-add_executable(test_parsing ${CMAKE_SOURCE_DIR}/test/test_parsing.C)
-target_link_libraries(test_parsing ${PROJECT_NAME}lib ${Boost_LIBRARIES} ${LibXML++_LDFLAGS} )
+add_executable(test_parsing ${CMAKE_SOURCE_DIR}/test/test_parsing.C  ${library_sources})
+target_link_libraries(test_parsing ${ChimeraTK-ApplicationCore_LIBRARIES} ${Boost_LIBRARIES} ${LibXML++_LIBRARIES})
 add_test(test_parsing test_parsing)
 
 # Install the executable and the RPC_LIBNO file
 if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/export/doocs/server")
-  install(TARGETS ${PROJECT_NAME}lib LIBRARY DESTINATION ${PROJECT_NAME}/lib)
-  install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${PROJECT_NAME}/bin)
-  install(FILES ${CMAKE_SOURCE_DIR}/configs/RPC_LIBNO DESTINATION ${PROJECT_NAME})
+  install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION mockup_server)
+  install(FILES ${CMAKE_SOURCE_DIR}/configs/RPC_LIBNO DESTINATION mockup_server)
 else()
   install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
-  install(TARGETS ${PROJECT_NAME}lib LIBRARY DESTINATION lib)
-  # the RPC_LIBNO file is not installed when not following the DOOCS directory scheme
 endif()

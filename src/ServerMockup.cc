@@ -5,7 +5,8 @@
  *      Author: zenker
  */
 
-#include "DummyServer.h"
+#include "../include/ServerMockup.h"
+
 #include "XMLParser.h"
 
 #include <boost/thread/thread.hpp>
@@ -145,7 +146,7 @@ void XMLModule::mainLoop(){
 }
 
 
-void DummyServer::defineConnections(){
+void ServerMockup::defineConnections(){
   timer.trigger >> xml.trigger;
 
   for(auto  i = xml.in_intParameter.begin(), e = xml.in_intParameter.end(); i != e; i++){

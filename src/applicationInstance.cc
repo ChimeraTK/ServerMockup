@@ -9,8 +9,8 @@
 #include <ChimeraTK/ApplicationCore/ApplicationCore.h>
 #include <ChimeraTK/ApplicationCore/EnableXMLGenerator.h>
 
-#include "DummyServer.h"
+#include "ServerMockup.h"
 
 // define the application instance
-DummyServer theServer;
+ServerMockup theServer;
 

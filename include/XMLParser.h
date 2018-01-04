@@ -64,6 +64,7 @@ private:
    *  its names: "variable").
    * \param element An element to start with. All elements inside the given element
    * are parsed and variables are put into the vars vector by calling readVariable.
+   * \throws xmlpp::exception In case an unknown xml element is found
    */
   void readDirectory(const xmlpp::Element *element, std::string directory);
   /**
@@ -75,6 +76,7 @@ private:
    * \param element The elements name is expected to be "variable" and not "directory"
    * \param directoy The directory in the global tree structure of the given element.
    * This information is stored in the variable.
+   * \throws xmlpp::exception In case an unknown data flow direction is found
    */
   void readVariable(const xmlpp::Element* element, std::string directory);
 
@@ -87,6 +89,7 @@ public:
   std::vector<variable> vars;
   /**
    * Parse the input file and fill the vector of variables (see vars)
+   * \throws xmlpp::exception If input file can not be opened or correct root node cannot be found
    */
   void parse();
 

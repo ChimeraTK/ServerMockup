@@ -86,9 +86,7 @@ void XMLParser::readVariable(const xmlpp::Element* element, std::string director
         } else if (type.compare("control_system_to_application") == 0){
           tmp.dir = direction::IN;
         } else {
-          std::stringstream ss;
-          ss << "Unknown data flow direction: " << type;
-          throw std::runtime_error(ss.str());
+          throw xmlpp::exception("Unknown data flow direction: " + type);
         }
       } else if (child->get_name() == "numberOfElements"){
         tmp.nElements = atoi(node->get_child_text()->get_content().c_str());
@@ -120,22 +118,15 @@ void XMLParser::readDirectory(const xmlpp::Element* element, std::string directo
 }
 
 void XMLParser::parse(){
-  try {
-    parser_.parse_file(inputFile_);
-    // get root element
-    const auto root = parser_.get_document()->get_root_node();
-    if(root->get_name() != "application") {
-      throw xmlpp::exception(
-          "Expected root tag 'application' instead of: " + root->get_name());
-    }
-
-//    readDirectory(root, root->get_attribute_value("name").c_str());
-    readDirectory(root, "");
-  } catch(xmlpp::exception &e) {
-    std::cerr << "Error opening the xml file '" << inputFile_ << "': " << e.what()
-        << std::endl;
+  parser_.parse_file(inputFile_);
+  // get root element
+  const auto root = parser_.get_document()->get_root_node();
+  if(root->get_name() != "application") {
+    throw xmlpp::exception(
+        "Expected root tag 'application' instead of: " + root->get_name());
   }
 
+  readDirectory(root, "");
 }
 
 std::string xml_parser::getRootDir(std::string inputFile){

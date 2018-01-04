@@ -5,13 +5,13 @@
  *      Author: zenker
  */
 
-#ifndef INCLUDE_DUMMYSERVER_H_
-#define INCLUDE_DUMMYSERVER_H_
+#ifndef INCLUDE_SERVERMOCKUP_H_
+#define INCLUDE_SERVERMOCKUP_H_
 
 #undef GENERATE_XML
 #include <ChimeraTK/ApplicationCore/ApplicationCore.h>
 
-#define INPUT "dummy_server_input.xml"
+#define INPUT "ServerMockup_input.xml"
 
 #include <string>
 #include <unordered_set>
@@ -104,10 +104,10 @@ struct XMLModule: public ctk::ApplicationModule {
 };
 
 
-struct DummyServer: public ctk::Application {
+struct ServerMockup: public ctk::Application {
 
-  DummyServer() : Application(xml_parser::getRootDir(std::string(INPUT))) {}
-  ~DummyServer() {
+  ServerMockup() : Application(xml_parser::getRootDir(std::string(INPUT))) {}
+  ~ServerMockup() {
     shutdown();
   }
 
@@ -124,4 +124,4 @@ struct DummyServer: public ctk::Application {
 
 
 
-#endif /* INCLUDE_DUMMYSERVER_H_ */
+#endif /* INCLUDE_SERVERMOCKUP_H_ */

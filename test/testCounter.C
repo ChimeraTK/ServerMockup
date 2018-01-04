@@ -1,3 +1,4 @@
+
 /*
  * testCounter.cc
  *
@@ -10,7 +11,7 @@
 #include <iostream>
 #include <string>
 
-#include "DummyServer.h"
+#include "ServerMockup.h"
 #include "ChimeraTK/ApplicationCore/TestFacility.h"
 #include <mtca4u/RegisterPath.h>
 
@@ -35,7 +36,7 @@ struct testApp : public ChimeraTK::Application {
 
   void defineConnections(){
     /**
-     * This is the difference compared to DummyServer defineConnections().
+     * This is the difference compared to ServerMockup defineConnections().
      * Connect a control system variable to the xml module instead of the trigger module.
      * Now there is a blocking read in the XMLModule, which is used to step through the
      * application.
@@ -43,7 +44,7 @@ struct testApp : public ChimeraTK::Application {
     cs("trigger") >> xml.trigger;
 
     /**
-     * Define all other connections as done in the DummyServer
+     * Define all other connections as done in the ServerMockup
      */
     for(auto  i = xml.in_intParameter.begin(), e = xml.in_intParameter.end(); i != e; i++){
       cs[i->first.directory](i->first.name) >> i->second;
@@ -129,6 +130,7 @@ BOOST_AUTO_TEST_CASE( testCounter) {
     writeTrigger.write();
     usleep(10000);
     tf.stepApplication();
+    BOOST_CHECK_EQUAL(tf.readScalar<int>("triggerCounter/"), 100 + i);
     std::cout << tf.readScalar<int>("triggerCounter/") << std::endl;
   }
 }
