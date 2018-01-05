@@ -1,4 +1,4 @@
-PROJECT(ServerMockup)
+PROJECT(server-mockup)
 cmake_minimum_required(VERSION 2.8)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
@@ -86,8 +86,8 @@ add_test(test_parsing test_parsing)
 
 # Install the executable and the RPC_LIBNO file
 if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/export/doocs/server")
-  install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION mockup_server)
-  install(FILES ${CMAKE_SOURCE_DIR}/configs/RPC_LIBNO DESTINATION mockup_server)
+  install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${PROJECT_NAME})
+  install(FILES ${CMAKE_SOURCE_DIR}/configs/RPC_LIBNO DESTINATION ${PROJECT_NAME})
 else()
   install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
 endif()

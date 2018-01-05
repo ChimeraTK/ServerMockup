@@ -11,7 +11,7 @@
 #undef GENERATE_XML
 #include <ChimeraTK/ApplicationCore/ApplicationCore.h>
 
-#define INPUT "ServerMockup_input.xml"
+#define INPUT "server-mockup_input.xml"
 
 #include <string>
 #include <unordered_set>
