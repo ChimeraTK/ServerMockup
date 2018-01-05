@@ -14,8 +14,6 @@ Usally what should be done is to create a softlink in the server directory:
 ln -s LLRFServer.xml server-mockup_input.xml
 ```
 
-**Since it is not known a priori which input file will be used the automatic call of the xml generator is disabled in the cmake config file!**
-
 The corresponding mapping file (in the example above LLRFServer_mapping.xml) will be considered automatically.
 In case the DOOCS adapter is used the *conf file is required. Again create a symbolic like to the original server config file:
 
