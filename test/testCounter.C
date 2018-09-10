@@ -13,7 +13,6 @@
 
 #include "ServerMockup.h"
 #include "ChimeraTK/ApplicationCore/TestFacility.h"
-#include <mtca4u/RegisterPath.h>
 
 #include <boost/test/unit_test.hpp>
 using namespace boost::unit_test_framework;
