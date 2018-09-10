@@ -5,7 +5,7 @@
  *      Author: zenker
  */
 
-#include "../include/ServerMockup.h"
+#include "ServerMockup.h"
 
 #include "XMLParser.h"
 
