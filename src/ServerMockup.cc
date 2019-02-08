@@ -11,20 +11,6 @@
 
 #include <boost/thread/thread.hpp>
 
-void TimerModule::mainLoop() {
-  while(true) {
-    /**
-     * \internal
-     *  Setting an interruption point is included in read() methods of ChimeraTK but not in write()!
-     *  Thus set it by hand here!
-     */
-    boost::this_thread::interruption_point();
-    trigger = trigger + 1;
-    trigger.write();
-    sleep(2);
-  }
-}
-
 XMLModule::XMLModule(EntityOwner *owner, const std::string &name,
     const std::string &description, bool eliminateHierarchy,
     const std::unordered_set<std::string> &tags) :
@@ -147,7 +133,9 @@ void XMLModule::mainLoop(){
 
 
 void ServerMockup::defineConnections(){
-  timer.trigger >> xml.trigger;
+  trigger.tick >> xml.trigger;
+
+  cs["configuration"]("UpdateTime") >> trigger.period;
 
   for(auto  i = xml.in_intParameter.begin(), e = xml.in_intParameter.end(); i != e; i++){
     cs[i->first.directory](i->first.name) >> i->second;

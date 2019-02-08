@@ -21,7 +21,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -DDEBUG")
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--export-dynamic -Wl,--no-as-needed -Wl,--enable-new-dtags")
 
 include(cmake/add_dependency.cmake)
-add_dependency(ChimeraTK-ApplicationCore 00.05 REQUIRED)
+add_dependency(ChimeraTK-ApplicationCore 01.01 REQUIRED)
 
 IF(ADAPTER STREQUAL "OPCUA")
   message("Building against the OPC UA ControlSystemAdater")

@@ -9,7 +9,8 @@
 #define INCLUDE_SERVERMOCKUP_H_
 
 #undef GENERATE_XML
-#include <ChimeraTK/ApplicationCore/ApplicationCore.h>
+#include "ChimeraTK/ApplicationCore/ApplicationCore.h"
+#include "ChimeraTK/ApplicationCore/PeriodicTrigger.h"
 
 #define INPUT "server-mockup_input.xml"
 
@@ -18,24 +19,6 @@
 #include "XMLParser.h"
 
 namespace ctk = ChimeraTK;
-
-/**
- * This module is used to trigger the mainloops of the modules to go on.
- */
-struct TimerModule: public ctk::ApplicationModule {
-  using ctk::ApplicationModule::ApplicationModule;
-  /**
-   * \remark
-   * Observe this vaiable by other modules to obtain a trigger
-   */
-  ctk::ScalarOutput<int> trigger { this, "trigger", "", "Trigger counter",
-    { "Timer" }};
-
-  /**
-   * Application core main loop.
-   */
-  void mainLoop();
-};
 
 /**
  * This module holds all control system variables read from the input xml file.
@@ -62,7 +45,7 @@ struct XMLModule: public ctk::ApplicationModule {
       const std::string &description, bool eliminateHierarchy = false,
       const std::unordered_set<std::string> &tags = { });
 
-  ctk::ScalarPushInput<int> trigger { this, "trigger", "",
+  ctk::ScalarPushInput<uint64_t> trigger { this, "trigger", "",
       "Trigger used to update the watchdog" };
 
   /**
@@ -114,8 +97,7 @@ struct ServerMockup: public ctk::Application {
   XMLModule xml { this, "xmlModule",
     "Module publishing all variables from the input xml file" };
 
-  TimerModule timer { this, "timer",
-      "Module used to trigger the watchdog update" };
+  ctk::PeriodicTrigger trigger{this, "Trigger", "Trigger used for other modules"};
 
   ctk::ControlSystemModule cs;
 
