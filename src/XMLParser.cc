@@ -64,12 +64,25 @@ variable xml_parser::analyseNode(const xmlpp::Element &element){
         var.unit = "";
       }
     } else if (child->get_name() == "value_type"){
+      //\ToDo: Get rid of this and use SupportedUserTypes for doing that in a generic way
       if(std::string(node->get_child_text()->get_content().c_str()).compare("string") == 0){
         var.type = ctk::DataType::string;
+      } else if (std::string(node->get_child_text()->get_content().c_str()).compare("int8") == 0) {
+        var.type = ctk::DataType::int8;
+      } else if (std::string(node->get_child_text()->get_content().c_str()).compare("uint8") == 0) {
+        var.type = ctk::DataType::uint8;;
+      } else if (std::string(node->get_child_text()->get_content().c_str()).compare("int16") == 0) {
+        var.type = ctk::DataType::int16;
+      } else if (std::string(node->get_child_text()->get_content().c_str()).compare("uint16") == 0) {
+        var.type = ctk::DataType::uint16;;
       } else if (std::string(node->get_child_text()->get_content().c_str()).compare("int32") == 0) {
         var.type = ctk::DataType::int32;
       } else if (std::string(node->get_child_text()->get_content().c_str()).compare("uint32") == 0) {
         var.type = ctk::DataType::uint32;;
+      } else if (std::string(node->get_child_text()->get_content().c_str()).compare("int64") == 0) {
+        var.type = ctk::DataType::int64;
+      } else if (std::string(node->get_child_text()->get_content().c_str()).compare("uint64") == 0) {
+        var.type = ctk::DataType::uint64;;
       } else if (std::string(node->get_child_text()->get_content().c_str()).compare("double") == 0) {
         var.type = ctk::DataType::float64;
       } else if (std::string(node->get_child_text()->get_content().c_str()).compare("float") == 0) {
@@ -104,7 +117,6 @@ std::string xml_parser::getRootDir(std::string inputFile){
   return std::string(root->get_attribute_value("name").c_str());
 }
 
-
 void xml_parser::addElement(const xmlpp::Element &element, ctk::Module* owner,
       ctk::TemplateUserTypeMap<OutputList>* l1,
       ctk::TemplateUserTypeMap<OutputArrayList>* l2,
@@ -117,75 +129,31 @@ void xml_parser::addElement(const xmlpp::Element &element, ctk::Module* owner,
 #endif
   if(tmp.nElements>1){
     if(tmp.dir == xml_parser::direction::OUT){
-      if(tmp.type == ctk::DataType::int32){
-        auto& accessorList = boost::fusion::at_key<int32_t>(l2->table);
-        accessorList.emplace_back(ctk::ArrayOutput<int32_t>{owner, tmp.name, "", tmp.nElements, tmp.description, {"CS"}});
-      } else if(tmp.type == ctk::DataType::uint32){
-        auto& accessorList = boost::fusion::at_key<uint32_t>(l2->table);
-        accessorList.emplace_back(ctk::ArrayOutput<uint32_t>{owner, tmp.name, "", tmp.nElements, tmp.description, {"CS"}});
-      }else if (tmp.type == ctk::DataType::float32){
-        auto& accessorList = boost::fusion::at_key<float>(l2->table);
-        accessorList.emplace_back(ctk::ArrayOutput<float>{owner, tmp.name, "", tmp.nElements, tmp.description, {"CS"}});
-      } else if (tmp.type == ctk::DataType::float64){
-        auto& accessorList = boost::fusion::at_key<double>(l2->table);
-        accessorList.emplace_back(ctk::ArrayOutput<double>{owner, tmp.name, "", tmp.nElements, tmp.description, {"CS"}});
-      } else if (tmp.type == ctk::DataType::string){
-        auto& accessorList = boost::fusion::at_key<std::string>(l2->table);
-        accessorList.emplace_back(ctk::ArrayOutput<std::string>{owner, tmp.name, "", tmp.nElements, tmp.description, {"CS"}});
-      }
+      auto myLambda = [&](auto arg) {
+        auto& accessorList = boost::fusion::at_key<decltype(arg)>(l2->table);
+        accessorList.emplace_back(ctk::ArrayOutput<decltype(arg)>{owner, tmp.name, "", tmp.nElements, tmp.description, {"CS"}});
+      };
+      ctk::callForType(tmp.type, myLambda);
     } else {
-      if(tmp.type == ctk::DataType::int32){
-        auto& accessorList = boost::fusion::at_key<int32_t>(l4->table);
-        accessorList.emplace_back(ctk::ArrayPollInput<int32_t>{owner, tmp.name, "", tmp.nElements, tmp.description, {"CS"}});
-      } else if(tmp.type == ctk::DataType::uint32){
-        auto& accessorList = boost::fusion::at_key<uint32_t>(l4->table);
-        accessorList.emplace_back(ctk::ArrayPollInput<uint32_t>{owner, tmp.name, "", tmp.nElements, tmp.description, {"CS"}});
-      }else if (tmp.type == ctk::DataType::float32){
-        auto& accessorList = boost::fusion::at_key<float>(l4->table);
-        accessorList.emplace_back(ctk::ArrayPollInput<float>{owner, tmp.name, "", tmp.nElements, tmp.description, {"CS"}});
-      } else if (tmp.type == ctk::DataType::float64){
-        auto& accessorList = boost::fusion::at_key<double>(l4->table);
-        accessorList.emplace_back(ctk::ArrayPollInput<double>{owner, tmp.name, "", tmp.nElements, tmp.description, {"CS"}});
-      } else if (tmp.type == ctk::DataType::string){
-        auto& accessorList = boost::fusion::at_key<std::string>(l4->table);
-        accessorList.emplace_back(ctk::ArrayPollInput<std::string>{owner, tmp.name, "", tmp.nElements, tmp.description, {"CS"}});
-      }
+      auto myLambda = [&](auto arg) {
+        auto& accessorList = boost::fusion::at_key<decltype(arg)>(l4->table);
+        accessorList.emplace_back(ctk::ArrayPollInput<decltype(arg)>{owner, tmp.name, "", tmp.nElements, tmp.description, {"CS"}});
+      };
+      ctk::callForType(tmp.type, myLambda);
     }
   } else {
     if(tmp.dir == xml_parser::direction::OUT){
-      if(tmp.type == ctk::DataType::int32){
-        auto& accessorList = boost::fusion::at_key<int32_t>(l1->table);
-        accessorList.emplace_back(ctk::ScalarOutput<int32_t>{owner, tmp.name, "", tmp.description, {"CS"}});
-      } else if(tmp.type == ctk::DataType::uint32){
-        auto& accessorList = boost::fusion::at_key<uint32_t>(l1->table);
-        accessorList.emplace_back(ctk::ScalarOutput<uint32_t>{owner, tmp.name, "", tmp.description, {"CS"}});
-      }else if (tmp.type == ctk::DataType::float32){
-        auto& accessorList = boost::fusion::at_key<float>(l1->table);
-        accessorList.emplace_back(ctk::ScalarOutput<float>{owner, tmp.name, "", tmp.description, {"CS"}});
-      } else if (tmp.type == ctk::DataType::float64){
-        auto& accessorList = boost::fusion::at_key<double>(l1->table);
-        accessorList.emplace_back(ctk::ScalarOutput<double>{owner, tmp.name, "", tmp.description, {"CS"}});
-      } else if (tmp.type == ctk::DataType::string){
-        auto& accessorList = boost::fusion::at_key<std::string>(l1->table);
-        accessorList.emplace_back(ctk::ScalarOutput<std::string>{owner, tmp.name, "", tmp.description, {"CS"}});
-      }
+      auto myLambda = [&](auto arg) {
+        auto& accessorList = boost::fusion::at_key<decltype(arg)>(l1->table);
+        accessorList.emplace_back(ctk::ScalarOutput<decltype(arg)>{owner, tmp.name, "", tmp.description, {"CS"}});
+      };
+      ctk::callForType(tmp.type, myLambda);
     } else {
-      if(tmp.type == ctk::DataType::int32){
-        auto& accessorList = boost::fusion::at_key<int32_t>(l3->table);
-        accessorList.emplace_back(ctk::ScalarPollInput<int32_t>{owner, tmp.name, "", tmp.description, {"CS"}});
-      } else if(tmp.type == ctk::DataType::uint32){
-        auto& accessorList = boost::fusion::at_key<uint32_t>(l3->table);
-        accessorList.emplace_back(ctk::ScalarPollInput<uint32_t>{owner, tmp.name, "", tmp.description, {"CS"}});
-      } else if (tmp.type == ctk::DataType::float32){
-        auto& accessorList = boost::fusion::at_key<float>(l3->table);
-        accessorList.emplace_back(ctk::ScalarPollInput<float>{owner, tmp.name, "", tmp.description, {"CS"}});
-      } else if (tmp.type == ctk::DataType::float64){
-        auto& accessorList = boost::fusion::at_key<double>(l3->table);
-        accessorList.emplace_back(ctk::ScalarPollInput<double>{owner, tmp.name, "", tmp.description, {"CS"}});
-      } else if (tmp.type == ctk::DataType::string){
-        auto& accessorList = boost::fusion::at_key<std::string>(l3->table);
-        accessorList.emplace_back(ctk::ScalarPollInput<std::string>{owner, tmp.name, "", tmp.description, {"CS"}});
-      }
+      auto myLambda = [&](auto arg) {
+        auto& accessorList = boost::fusion::at_key<decltype(arg)>(l3->table);
+        accessorList.emplace_back(ctk::ScalarPollInput<decltype(arg)>{owner, tmp.name, "", tmp.description, {"CS"}});
+      };
+      ctk::callForType(tmp.type, myLambda);
     }
   }
 }
