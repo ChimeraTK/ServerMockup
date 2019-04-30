@@ -9,14 +9,12 @@
 #define INCLUDE_XMLPARSER_H_
 
 #include <libxml++/libxml++.h>
+#include "ChimeraTK/SupportedUserTypes.h"
+#include "ChimeraTK/ApplicationCore/ApplicationCore.h"
+
+namespace ctk = ChimeraTK;
 
 namespace xml_parser{
-
-/**
- * Supported data types
- * Extend this in case other data types are used in you input xml file.
- */
-enum varType { Int32, UInt32, Double, Float, String, Unknown};
 
 /**
  * Possible directions of data flow
@@ -24,12 +22,13 @@ enum varType { Int32, UInt32, Double, Float, String, Unknown};
 enum direction{ IN, OUT };
 
 /**
- * The struct holds all information stored in OPCUA for individual variables.
+ * The struct holds all information for individual variables available from the xml file
+ * produced by the xml-generator of chimeraTK servers.
  */
 struct variable{
-  varType type;
+  ctk::DataType type;
   direction dir;
-  std::string desciption;
+  std::string description;
   std::string unit;
   std::string name;
   std::string directory;
@@ -53,48 +52,36 @@ struct variable{
  */
 std::string getRootDir(std::string inputFile);
 
-class XMLParser{
-private:
-  std::string inputFile_;
-  xmlpp::DomParser parser_;
+/**
+ * Analyse a variable node from the xml file and store data in a variable struct.
+ * Data is added/taken from subnodes:
+ * - description
+ * - unit
+ * - value_type
+ * - direction
+ * - numberOfElements
+ *
+ * \throws xmlpp::exception In case the data flow direction is unknown.
+ */
+variable analyseNode(const xmlpp::Element &element);
 
-  /**
-   * Read all subelements from the given element. If subelements are directories (identified by its names: "directory")
-   *  too readDirectory is called iteratively. This is done until variable elements are found (identified by
-   *  its names: "variable").
-   * \param element An element to start with. All elements inside the given element
-   * are parsed and variables are put into the vars vector by calling readVariable.
-   * \throws xmlpp::exception In case an unknown xml element is found
-   */
-  void readDirectory(const xmlpp::Element *element, std::string directory);
-  /**
-   * Read variable information from the given element. Empty elements are ignored as well as
-   * additional elements. Test elements are:
-   * - description
-   * - unit
-   * - value_type
-   * \param element The elements name is expected to be "variable" and not "directory"
-   * \param directoy The directory in the global tree structure of the given element.
-   * This information is stored in the variable.
-   * \throws xmlpp::exception In case an unknown data flow direction is found
-   */
-  void readVariable(const xmlpp::Element* element, std::string directory);
+template<typename UserType>
+using OutputList = std::list<ctk::ScalarOutput<UserType>>;
+template<typename UserType>
+using OutputArrayList = std::list<ctk::ArrayOutput<UserType>>;
+template<typename UserType>
+using InputList = std::list<ctk::ScalarPollInput<UserType>>;
+template<typename UserType>
+using InputArrayList = std::list<ctk::ArrayPollInput<UserType>>;
 
-public:
-  XMLParser(std::string inputFile){inputFile_ = inputFile;}
-  /**
-   * Vector of all variables read from the input xml file.
-   * Only supported data types are read from the file (see varType).
-   */
-  std::vector<variable> vars;
-  /**
-   * Parse the input file and fill the vector of variables (see vars)
-   * \throws xmlpp::exception If input file can not be opened or correct root node cannot be found
-   */
-  void parse();
-
-};
-
+/**
+ * Create a ChimeraTK Accessor and put it in the according list.
+ *
+ */
+void addElement(const xmlpp::Element &element, ctk::Module* owner,
+    ctk::TemplateUserTypeMap<OutputList>* l1,
+    ctk::TemplateUserTypeMap<OutputArrayList>* l2,
+    ctk::TemplateUserTypeMap<InputList>* l3,
+    ctk::TemplateUserTypeMap<InputArrayList>* l4);
 }
-
 #endif /* INCLUDE_XMLPARSER_H_ */

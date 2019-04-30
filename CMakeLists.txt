@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 2.8)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
 set(${PROJECT_NAME}_MAJOR_VERSION 00)
-set(${PROJECT_NAME}_MINOR_VERSION 01)
+set(${PROJECT_NAME}_MINOR_VERSION 03)
 set(${PROJECT_NAME}_PATCH_VERSION 00)
 include(cmake/set_version_numbers.cmake)
 
@@ -73,16 +73,6 @@ target_link_libraries(${PROJECT_NAME} ${ChimeraTK-ApplicationCore_LIBRARIES}
                                       ${ChimeraTK-ControlSystemAdapter-DoocsAdapter_LIBRARIES} 
                                       ${ChimeraTK-ControlSystemAdapter-OPCUAAdapter_LIBRARIES} 
                                       ${LibXML++_LIBRARIES})
-
-# Create the executable for automated unit testing.
-# add the test executable with all test source files
-add_executable(testCounter ${CMAKE_SOURCE_DIR}/test/testCounter.C ${library_sources})
-target_link_libraries(testCounter ${ChimeraTK-ApplicationCore_LIBRARIES} ${Boost_LIBRARIES} ${LibXML++_LIBRARIES})
-add_test(testCounter testCounter)
-
-add_executable(test_parsing ${CMAKE_SOURCE_DIR}/test/test_parsing.C  ${library_sources})
-target_link_libraries(test_parsing ${ChimeraTK-ApplicationCore_LIBRARIES} ${Boost_LIBRARIES} ${LibXML++_LIBRARIES})
-add_test(test_parsing test_parsing)
 
 # Install the executable and the RPC_LIBNO file
 if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/export/doocs/server")
