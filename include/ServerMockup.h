@@ -21,7 +21,7 @@ namespace ctk = ChimeraTK;
 
 /**
  * This group is used to build the hierarchy read from the xml file.
- * The hierarchy is build recursive by adding a TemplateGroups to groups and so on.
+ * The hierarchy is build recursive by adding TemplateGroups to groups and so on.
  */
 struct TemplateGroup: ctk::VariableGroup{
   using ctk::VariableGroup::VariableGroup;
@@ -39,14 +39,6 @@ struct TemplateGroup: ctk::VariableGroup{
 
 /**
  * This module holds all control system variables read from the input xml file.
- * \attention
- * So far only the following types are supported:
- * - string
- * - int32
- * - uint32
- * - double
- * - float
- * If other types are used in the input xml file the module needs to be extended!
  *
  * \remark
  * In principle no TimerModule is needed here. One could simply use a trigger variable

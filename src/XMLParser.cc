@@ -64,7 +64,11 @@ variable xml_parser::analyseNode(const xmlpp::Element &element){
         var.unit = "";
       }
     } else if (child->get_name() == "value_type"){
-      //\ToDo: Get rid of this and use SupportedUserTypes for doing that in a generic way
+      /*
+       * \ToDo: Get rid of this and use SupportedUserTypes for doing that in a generic way
+       * \remark In the XMLGeneretorVisitor that produces the XML files it is done in a similar way
+       * -> find common solution using e.g. boost bimap.
+       */
       if(std::string(node->get_child_text()->get_content().c_str()).compare("string") == 0){
         var.type = ctk::DataType::string;
       } else if (std::string(node->get_child_text()->get_content().c_str()).compare("int8") == 0) {
