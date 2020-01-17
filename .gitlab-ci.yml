@@ -7,7 +7,7 @@ default:
   before_script:
     - apt update
     - apt install -qq --yes software-properties-common cmake g++ libboost-program-options-dev libboost-filesystem-dev libboost-test-dev libboost-date-time-dev libboost-log-dev 
-    - add-apt-repository http://doocs.desy.de/
+    - add-apt-repository http://doocs.desy.de/pub/doocs
     - apt update
     - apt install -qq --yes libchimeratk-deviceaccess-dev libchimeratk-applicationcore-dev  libchimeratk-controlsystemadapter-dev libchimeratk-controlsystemadapter-opcuaadapter-dev
 
