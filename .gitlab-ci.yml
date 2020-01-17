@@ -5,6 +5,7 @@ stages:
 default:
   image: ubuntu:xenial
   before_script:
+    - apt update
     - apt install -qq --yes --force-yes software-properties-common cmake g++ libboost-program-options-dev libboost-filesystem-dev libboost-test-dev libboost-date-time-dev libboost-log-dev 
     - apt add-apt-repository
     - apt update
