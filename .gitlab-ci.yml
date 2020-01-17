@@ -1,0 +1,25 @@
+stages:
+#  - build
+  - test
+
+default:
+  image: ubuntu:xenial
+  before_script:
+    - apt add-apt-repository
+    - apt update
+    - apt install -qq --yes --force-yes cmake g++ libboost-program-options-dev libboost-filesystem-dev libboost-test-dev libboost-date-time-dev libboost-log-dev 
+    - apt install -qq --yes --force-yes libchimeratk-deviceaccess-dev libchimeratk-applicationcore-dev  libchimeratk-controlsystemadapter-dev libchimeratk-controlsystemadapter-opcuaadapter-dev
+
+#check_env:
+#  stage: build
+#  script:
+#    - g++ --version
+#    - cmake --version
+
+run_tests:
+  stage: test
+  script:
+    - mkdir build
+    - cd build
+    - cmake ..
+    - make
