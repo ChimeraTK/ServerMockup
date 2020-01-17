@@ -6,7 +6,7 @@ default:
   image: ubuntu:xenial
   before_script:
     - apt update
-    - apt install -qq --yes software-properties-common cmake g++ libboost-program-options-dev libboost-filesystem-dev libboost-test-dev libboost-date-time-dev libboost-log-dev 
+    - apt install -qq --yes software-properties-common cmake g++ libboost-program-options-dev libboost-filesystem-dev libboost-test-dev libboost-date-time-dev libboost-log-dev wget
     - wget -O - http://doocs.desy.de/pub/doocs/DOOCS-key.gpg.asc | apt-key add -
     - add-apt-repository -u 'deb [ trusted=yes ] http://doocs.desy.de/pub/doocs xenial main'
     - apt update
