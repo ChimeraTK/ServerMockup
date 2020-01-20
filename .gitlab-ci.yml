@@ -1,6 +1,6 @@
 stages:
-#  - build
-  - test
+  - build
+#  - test
 
 default:
   image: ubuntu:xenial
@@ -12,16 +12,20 @@ default:
     - apt update
     - apt install -qq --yes libchimeratk-deviceaccess-dev libchimeratk-applicationcore-dev  libchimeratk-controlsystemadapter-dev libchimeratk-controlsystemadapter-opcuaadapter-dev
 
-#check_env:
-#  stage: build
-#  script:
-#    - g++ --version
-#    - cmake --version
-
-run_tests:
-  stage: test
+build_package:
+  stage: build
+#  artifacts:
+#    paths:
+#      - build
+#    expire_in: 1 day
   script:
     - mkdir build
     - cd build
     - cmake -DADAPTER=OPCUA ..
     - make
+
+
+#run_tests:
+#  stage: test
+#  script:
+#    - make test
