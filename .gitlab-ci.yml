@@ -3,14 +3,7 @@ stages:
 #  - test
 
 default:
-  image: ubuntu:xenial
-  before_script:
-    - apt update
-    - apt install -qq --yes software-properties-common cmake g++ libboost-program-options-dev libboost-filesystem-dev libboost-test-dev libboost-date-time-dev libboost-log-dev wget
-    - wget -O - http://doocs.desy.de/pub/doocs/DOOCS-key.gpg.asc | apt-key add -
-    - add-apt-repository -u 'deb [ trusted=yes ] http://doocs.desy.de/pub/doocs xenial main'
-    - apt update
-    - apt install -qq --yes libchimeratk-deviceaccess-dev libchimeratk-applicationcore-dev  libchimeratk-controlsystemadapter-dev libchimeratk-controlsystemadapter-opcuaadapter-dev
+  image: registry.hzdr.de/llrf/ctk-docker/ctk-application-opc-ua:xenial
 
 build_package:
   stage: build
