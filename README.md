@@ -1,3 +1,5 @@
+[![pipeline status](https://gitlab.hzdr.de/llrf/chimeratk-server/dummy-server/badges/master/pipeline.svg)](https://gitlab.hzdr.de/llrf/chimeratk-server/dummy-server/pipelines)
+
 # Server Mockup
 Read variables of a ChimeraTK server and create a server, that shows exactly the same variables. It is not filling anything meaningful to the variables - it is just showing them. This can be useful if the final ChimeraTK server is not working yet, but someone wants to prepare client applications using the ChimeraTK server variables.
 
