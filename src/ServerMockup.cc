@@ -6,6 +6,7 @@
  */
 
 #include "ServerMockup.h"
+#include "version.h"
 
 void TemplateGroup::addElement(const xmlpp::Element* element){
   for(const auto& child : element->get_children()){
@@ -77,4 +78,7 @@ void ServerMockup::defineConnections(){
     it->findTag("CS").connectTo(cs[it->getName()]);
   }
   cs["configuration"]("UpdateTime") >> trigger.period;
+  ctk::VariableNetworkNode::makeConstant(true, AppVersion::major, 1) >> cs["Server"]["Version"]("major");
+  ctk::VariableNetworkNode::makeConstant(true, AppVersion::minor, 1) >> cs["Server"]["Version"]("minor");
+  ctk::VariableNetworkNode::makeConstant(true, AppVersion::patch, 1) >> cs["Server"]["Version"]("patch");
 }
