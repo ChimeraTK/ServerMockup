@@ -13,7 +13,7 @@ build_package:
 #    expire_in: 1 day
   script:
     - apt-add-repository -r 'deb [ arch=amd64 trusted=yes ] http://apt.hzdr.de:8080 xenial main'
-    - echo 'deb [ arch=amd64 trusted=yes ] http://apt.hzdr.de:8080 xenial main' > /etc/apt/sources.list.d/hzdr.de
+    - echo 'deb [ arch=amd64 trusted=yes ] http://apt.hzdr.de:8080 xenial main' > /etc/apt/sources.list.d/hzdr.list
     - apt-get update
     - apt-get install libchimeratk-daq
     - mkdir build
