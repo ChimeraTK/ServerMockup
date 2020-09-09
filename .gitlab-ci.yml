@@ -3,8 +3,8 @@ stages:
 #  - test
 
 default:
-  image: registry.hzdr.de/llrf/ctk-docker/ctk-application-opc-ua:xenial
-
+#  image: registry.hzdr.de/llrf/ctk-docker/ctk-application-opc-ua:xenial
+  image: registry.hzdr.de/llrf/ctk-docker/ctk-application-opc-ua_root:xenial
 build_package:
   stage: build
 #  artifacts:
@@ -12,6 +12,8 @@ build_package:
 #      - build
 #    expire_in: 1 day
   script:
+    - apt update
+    - apt install libchimeratk-daq
     - mkdir build
     - cd build
     - cmake -DADAPTER=OPCUA ..
