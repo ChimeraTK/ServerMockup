@@ -12,8 +12,10 @@ build_package:
 #      - build
 #    expire_in: 1 day
   script:
-    - apt --allow-unauthenticated update
-    - apt install libchimeratk-daq
+    - apt-add-repository -r 'deb [ arch=amd64 trusted=yes ] http://apt.hzdr.de:8080 xenial main'
+    - echo 'deb [ arch=amd64 trusted=yes ] http://apt.hzdr.de:8080 xenial main' > /etc/apt/sources.list.d/hzdr.de
+    - apt-get update
+    - apt-get install libchimeratk-daq
     - mkdir build
     - cd build
     - cmake -DADAPTER=OPCUA ..
