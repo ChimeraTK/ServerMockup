@@ -3,8 +3,8 @@ stages:
 #  - test
 
 default:
-#  image: registry.hzdr.de/llrf/ctk-docker/ctk-application-opc-ua:xenial
-  image: registry.hzdr.de/llrf/ctk-docker/ctk-application-opc-ua_root:xenial
+  image: registry.hzdr.de/llrf/ctk-docker/ctk-application-opc-ua:xenial
+
 build_package:
   stage: build
 #  artifacts:
@@ -12,13 +12,9 @@ build_package:
 #      - build
 #    expire_in: 1 day
   script:
-    - apt-add-repository -r 'deb [ arch=amd64 trusted=yes ] http://apt.hzdr.de:8080 xenial main'
-    - echo 'deb [ arch=amd64 trusted=yes ] http://apt.hzdr.de:8080 xenial main' > /etc/apt/sources.list.d/hzdr.list
-    - apt-get update
-    - apt-get install libchimeratk-daq
     - mkdir build
     - cd build
-    - cmake -DCMAKE_MODULE_PATH=/usr/share/cmake-3.5/Modules/ -DADAPTER=OPCUA ..
+    - cmake -DADAPTER=OPCUA ..
     - make
 
 
