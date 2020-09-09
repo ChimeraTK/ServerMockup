@@ -12,7 +12,7 @@ build_package:
 #      - build
 #    expire_in: 1 day
   script:
-    - apt update
+    - apt --allow-unauthenticated update
     - apt install libchimeratk-daq
     - mkdir build
     - cd build
