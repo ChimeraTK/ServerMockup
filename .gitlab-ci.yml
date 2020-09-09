@@ -18,7 +18,7 @@ build_package:
     - apt-get install libchimeratk-daq
     - mkdir build
     - cd build
-    - cmake -DADAPTER=OPCUA ..
+    - cmake -DCMAKE_MODULE_PATH=/usr/share/cmake-3.5/Modules/ -DADAPTER=OPCUA ..
     - make
 
 
