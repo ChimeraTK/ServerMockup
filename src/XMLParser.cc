@@ -98,7 +98,7 @@ variable xml_parser::analyseNode(const xmlpp::Element &element){
       std::string type =  node->get_child_text()->get_content().c_str();
       if(type.compare("application_to_control_system") == 0){
         var.dir = xml_parser::direction::OUT;
-      } else if (type.compare("control_system_to_application") == 0){
+      } else if (type.compare("control_system_to_application") == 0 || type.compare("control_system_to_application_with_return") == 0){
         var.dir = xml_parser::direction::IN;
       } else {
         throw xmlpp::exception("Unknown data flow direction: " + type);
