@@ -131,6 +131,8 @@ void xml_parser::addElement(const xmlpp::Element &element, ctk::Module* owner,
   std::cout << owner->getName() << "::Adding variable to top module: " << tmp.name << std::endl;
   tmp.print();
 #endif
+  if(tmp.type == ctk::DataType::none)
+    return;
   if(tmp.nElements>1){
     if(tmp.dir == xml_parser::direction::OUT){
       auto myLambda = [&](auto arg) {
