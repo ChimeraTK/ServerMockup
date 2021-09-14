@@ -28,10 +28,10 @@ struct TemplateGroup: ctk::VariableGroup{
 
   std::vector<TemplateGroup> groups;
 
-  ctk::TemplateUserTypeMap<xml_parser::OutputList> _outputAccessorListMap;
-  ctk::TemplateUserTypeMap<xml_parser::InputList> _inputAccessorListMap;
-  ctk::TemplateUserTypeMap<xml_parser::OutputArrayList> _outputArrayAccessorListMap;
-  ctk::TemplateUserTypeMap<xml_parser::InputArrayList> _inputArrayAccessorListMap;
+  ctk::TemplateUserTypeMapNoVoid<xml_parser::OutputList> _outputAccessorListMap;
+  ctk::TemplateUserTypeMapNoVoid<xml_parser::InputList> _inputAccessorListMap;
+  ctk::TemplateUserTypeMapNoVoid<xml_parser::OutputArrayList> _outputArrayAccessorListMap;
+  ctk::TemplateUserTypeMapNoVoid<xml_parser::InputArrayList> _inputArrayAccessorListMap;
 
   void addElement(const xmlpp::Element* element);
 
@@ -55,10 +55,10 @@ struct TemplateModule: public ctk::ApplicationModule {
 
   std::vector<TemplateGroup> groups;
 
-  ctk::TemplateUserTypeMap<xml_parser::OutputList> _outputAccessorListMap;
-  ctk::TemplateUserTypeMap<xml_parser::InputList> _inputAccessorListMap;
-  ctk::TemplateUserTypeMap<xml_parser::OutputArrayList> _outputArrayAccessorListMap;
-  ctk::TemplateUserTypeMap<xml_parser::InputArrayList> _inputArrayAccessorListMap;
+  ctk::TemplateUserTypeMapNoVoid<xml_parser::OutputList> _outputAccessorListMap;
+  ctk::TemplateUserTypeMapNoVoid<xml_parser::InputList> _inputAccessorListMap;
+  ctk::TemplateUserTypeMapNoVoid<xml_parser::OutputArrayList> _outputArrayAccessorListMap;
+  ctk::TemplateUserTypeMapNoVoid<xml_parser::InputArrayList> _inputArrayAccessorListMap;
 
   void addElement(const xmlpp::Element* element);
 

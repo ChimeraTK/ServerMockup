@@ -122,16 +122,16 @@ std::string xml_parser::getRootDir(std::string inputFile){
 }
 
 void xml_parser::addElement(const xmlpp::Element &element, ctk::Module* owner,
-      ctk::TemplateUserTypeMap<OutputList>* l1,
-      ctk::TemplateUserTypeMap<OutputArrayList>* l2,
-      ctk::TemplateUserTypeMap<InputList>* l3,
-      ctk::TemplateUserTypeMap<InputArrayList>* l4){
+      ctk::TemplateUserTypeMapNoVoid<OutputList>* l1,
+      ctk::TemplateUserTypeMapNoVoid<OutputArrayList>* l2,
+      ctk::TemplateUserTypeMapNoVoid<InputList>* l3,
+      ctk::TemplateUserTypeMapNoVoid<InputArrayList>* l4){
   xml_parser::variable tmp = xml_parser::analyseNode(element);
 #ifdef DEBUG
   std::cout << owner->getName() << "::Adding variable to top module: " << tmp.name << std::endl;
   tmp.print();
 #endif
-  if(tmp.type == ctk::DataType::none)
+  if(tmp.type == ctk::DataType::none || tmp.type == ctk::DataType::Void)
     return;
   if(tmp.nElements>1){
     if(tmp.dir == xml_parser::direction::OUT){
@@ -139,13 +139,13 @@ void xml_parser::addElement(const xmlpp::Element &element, ctk::Module* owner,
         auto& accessorList = boost::fusion::at_key<decltype(arg)>(l2->table);
         accessorList.emplace_back(ctk::ArrayOutput<decltype(arg)>{owner, tmp.name, "", tmp.nElements, tmp.description, {"CS"}});
       };
-      ctk::callForType(tmp.type, myLambda);
+      ctk::callForTypeNoVoid(tmp.type, myLambda);
     } else {
       auto myLambda = [&](auto arg) {
         auto& accessorList = boost::fusion::at_key<decltype(arg)>(l4->table);
         accessorList.emplace_back(ctk::ArrayPollInput<decltype(arg)>{owner, tmp.name, "", tmp.nElements, tmp.description, {"CS"}});
       };
-      ctk::callForType(tmp.type, myLambda);
+      ctk::callForTypeNoVoid(tmp.type, myLambda);
     }
   } else {
     if(tmp.dir == xml_parser::direction::OUT){
@@ -153,13 +153,13 @@ void xml_parser::addElement(const xmlpp::Element &element, ctk::Module* owner,
         auto& accessorList = boost::fusion::at_key<decltype(arg)>(l1->table);
         accessorList.emplace_back(ctk::ScalarOutput<decltype(arg)>{owner, tmp.name, "", tmp.description, {"CS"}});
       };
-      ctk::callForType(tmp.type, myLambda);
+      ctk::callForTypeNoVoid(tmp.type, myLambda);
     } else {
       auto myLambda = [&](auto arg) {
         auto& accessorList = boost::fusion::at_key<decltype(arg)>(l3->table);
         accessorList.emplace_back(ctk::ScalarPollInput<decltype(arg)>{owner, tmp.name, "", tmp.description, {"CS"}});
       };
-      ctk::callForType(tmp.type, myLambda);
+      ctk::callForTypeNoVoid(tmp.type, myLambda);
     }
   }
 }

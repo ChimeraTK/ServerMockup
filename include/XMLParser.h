@@ -79,9 +79,9 @@ using InputArrayList = std::list<ctk::ArrayPollInput<UserType>>;
  *
  */
 void addElement(const xmlpp::Element &element, ctk::Module* owner,
-    ctk::TemplateUserTypeMap<OutputList>* l1,
-    ctk::TemplateUserTypeMap<OutputArrayList>* l2,
-    ctk::TemplateUserTypeMap<InputList>* l3,
-    ctk::TemplateUserTypeMap<InputArrayList>* l4);
+    ctk::TemplateUserTypeMapNoVoid<OutputList>* l1,
+    ctk::TemplateUserTypeMapNoVoid<OutputArrayList>* l2,
+    ctk::TemplateUserTypeMapNoVoid<InputList>* l3,
+    ctk::TemplateUserTypeMapNoVoid<InputArrayList>* l4);
 }
 #endif /* INCLUDE_XMLPARSER_H_ */
