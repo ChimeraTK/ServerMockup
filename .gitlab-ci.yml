@@ -3,7 +3,7 @@ stages:
 #  - test
 
 default:
-  image: registry.hzdr.de/llrf/ctk-docker/ctk-application-opc-ua:xenial
+  image: registry.hzdr.de/llrf/ctk-docker/ctk-application-opc-ua:focal
 
 build_package:
   stage: build
