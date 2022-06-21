@@ -1,24 +1,4 @@
-stages:
-  - build
-#  - test
+include:
+  - project: 'llrf/gitlab-ci-templates'
+    file: 'build_only.yml'
 
-default:
-  image: registry.hzdr.de/llrf/ctk-docker/ctk-application-opc-ua:focal
-
-build_package:
-  stage: build
-#  artifacts:
-#    paths:
-#      - build
-#    expire_in: 1 day
-  script:
-    - mkdir build
-    - cd build
-    - cmake -DADAPTER=OPCUA ..
-    - make
-
-
-#run_tests:
-#  stage: test
-#  script:
-#    - make test
