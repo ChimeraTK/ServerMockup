@@ -4,26 +4,19 @@ cmake_minimum_required(VERSION 2.8)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
 set(${PROJECT_NAME}_MAJOR_VERSION 00)
-set(${PROJECT_NAME}_MINOR_VERSION 04)
+set(${PROJECT_NAME}_MINOR_VERSION 05)
 set(${PROJECT_NAME}_PATCH_VERSION 00)
 include(cmake/set_version_numbers.cmake)
 
-# Moderate version of the compiler flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fPIC -Wextra -ansi -Wuninitialized -O3 -fomit-frame-pointer")
-
-# add constants for HOST and USER
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSER=\\\"`whoami`\\\" -DHOST=\\\"`hostname`\\\"")
-
-#use -DCMAKE_BUILD_TYPE=Debug in your cmake command to turn on the coverage option
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -DDEBUG")
-
-# linker flags
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--export-dynamic -Wl,--no-as-needed -Wl,--enable-new-dtags")
-
 include(cmake/add_dependency.cmake)
-add_dependency(ChimeraTK-ApplicationCore 01.01 REQUIRED)
+add_dependency(ChimeraTK-ApplicationCore 03.00 REQUIRED)
 
 include(cmake/set_control_system_adapter.cmake)
+include(cmake/enable_latest_cxx_support.cmake)
+include(cmake/set_default_flags.cmake)
+include(cmake/set_default_build_to_release.cmake)
+include(cmake/enable_code_style_check.cmake)
+
 
 FIND_PACKAGE(Boost COMPONENTS unit_test_framework thread)
 ENABLE_TESTING()
@@ -70,3 +63,7 @@ if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/export/doocs/server")
 else()
   install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
 endif()
+
+# Copy config files for testing
+configure_file( ${CMAKE_SOURCE_DIR}/configs/WatchdogServer.xml ${PROJECT_BINARY_DIR}/server-mockup_input.xml)
+FILE( COPY ${CMAKE_SOURCE_DIR}/configs/WatchdogServer_mapping.xml DESTINATION ${PROJECT_BINARY_DIR})

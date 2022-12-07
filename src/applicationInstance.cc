@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: Helmholtz-Zentrum Dresden-Rossendorf, FWKE, ChimeraTK Project <chimeratk-support@desy.de>
+// SPDX-License-Identifier: LGPL-3.0-or-later
 /*
  * applicationInstance.cc
  *
@@ -5,12 +7,9 @@
  *      Author: zenker
  */
 
+#include "ServerMockup.h"
 
 #include <ChimeraTK/ApplicationCore/ApplicationCore.h>
-#include <ChimeraTK/ApplicationCore/EnableXMLGenerator.h>
-
-#include "ServerMockup.h"
 
 // define the application instance
 ServerMockup theServer;
-
