@@ -1,5 +1,5 @@
 PROJECT(server-mockup)
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.16)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
@@ -8,8 +8,7 @@ set(${PROJECT_NAME}_MINOR_VERSION 05)
 set(${PROJECT_NAME}_PATCH_VERSION 00)
 include(cmake/set_version_numbers.cmake)
 
-include(cmake/add_dependency.cmake)
-add_dependency(ChimeraTK-ApplicationCore 03.00 REQUIRED)
+find_package(ChimeraTK-ApplicationCore 03.00 REQUIRED)
 
 include(cmake/set_control_system_adapter.cmake)
 include(cmake/enable_latest_cxx_support.cmake)
@@ -18,16 +17,14 @@ include(cmake/set_default_build_to_release.cmake)
 include(cmake/enable_code_style_check.cmake)
 
 
-FIND_PACKAGE(Boost COMPONENTS unit_test_framework thread)
-ENABLE_TESTING()
-
-
+# Find the XML parser library libxml++
 FIND_PACKAGE(PkgConfig REQUIRED)
 set(LIBXML++_VERSION "libxml++-2.6")
-PKG_CHECK_MODULES(LibXML++ REQUIRED ${LIBXML++_VERSION})
-PKG_CHECK_MODULES(glib REQUIRED glib-2.0)
-include_directories(SYSTEM "${LibXML++_INCLUDEDIR}/${LIBXML++_VERSION}")
-include_directories(${LibXML++_INCLUDE_DIRS})
+PKG_CHECK_MODULES(LibXML++ REQUIRED IMPORTED_TARGET ${LIBXML++_VERSION})
+PKG_CHECK_MODULES(glib REQUIRED IMPORTED_TARGET glib-2.0)
+
+FIND_PACKAGE(Boost COMPONENTS unit_test_framework thread)
+ENABLE_TESTING()
 
 # set include directories
 include_directories(${CMAKE_SOURCE_DIR}/include)
@@ -52,9 +49,9 @@ SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 # main server executable
 add_executable(${PROJECT_NAME} ${server_sources} ${library_sources})
-target_link_libraries(${PROJECT_NAME} ${ChimeraTK-ApplicationCore_LIBRARIES}
-                                      ${Adapter_LIBRARIES} 
-                                      ${LibXML++_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ChimeraTK::SelectedAdapter
+                                      ChimeraTK::ChimeraTK-ApplicationCore 
+                                      PkgConfig::LibXML++)
 
 # Install the executable and the RPC_LIBNO file
 if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/export/doocs/server")
