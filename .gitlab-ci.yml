@@ -1,4 +1,0 @@
-include:
-  - project: 'llrf/gitlab-ci-templates'
-    file: 'build_only.yml'
-
