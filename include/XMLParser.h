@@ -10,6 +10,7 @@
  */
 #include "ChimeraTK/ApplicationCore/ApplicationCore.h"
 #include "ChimeraTK/SupportedUserTypes.h"
+
 #include <libxml++/libxml++.h>
 
 namespace ctk = ChimeraTK;
